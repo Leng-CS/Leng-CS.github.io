@@ -1,0 +1,694 @@
+<!DOCTYPE html>
+<html lang="zh">
+    
+    <head>
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" name="viewport" />
+    <meta name="description" content="DC-1靶机渗透测试讲解" />
+    <meta name="hexo-theme-A4" content="v1.9.6" />
+    <link rel="alternate icon" type="image/webp" href="/img/favicon.png">
+    <title>Leng-CS | Personal Blog</title>
+
+    
+        
+<link rel="stylesheet" href="/css/highlight/style1.css">
+
+        
+<link rel="stylesheet" href="/css/reset.css">
+
+        
+<link rel="stylesheet" href="/css/markdown.css">
+
+        
+<link rel="stylesheet" href="/css/fonts.css">
+ 
+         <!--注意：首页既不是post也不是page-->
+        
+        
+        
+<link rel="stylesheet" href="/css/ui.css">
+ 
+        
+<link rel="stylesheet" href="/css/style.css">
+
+
+        
+            <!--返回顶部css-->
+            
+<link rel="stylesheet" href="/css/returnToTop.css">
+
+            
+<link rel="stylesheet" href="/css/unicons.css">
+
+        
+        
+            <!--目录-->
+            
+<link rel="stylesheet" href="/css/toc.css">
+
+        
+    
+
+    
+        
+<link rel="stylesheet" href="/css/returnToLastPage.css">
+
+    
+    
+   
+<link rel="stylesheet" href="/css/lightgallery-bundle.min.css">
+
+
+<meta name="generator" content="Hexo 7.3.0"></head>
+    
+    
+
+    
+    
+
+
+
+    
+
+    
+    
+
+    
+    
+    
+    <body>
+        <script src="/js/darkmode-js.min.js"></script>
+        
+        <script>
+            const options = {
+                bottom: '40px', // default: '32px'
+                right: 'unset', // default: '32px'
+                left: '42px', // default: 'unset'
+                time: '0.3s', // default: '0.3s'
+                mixColor: '#fff', // default: '#fff'
+                backgroundColor: ' #e4e4e4 ',  // default: '#fff'
+                buttonColorDark: '#100f2c',  // default: '#100f2c'
+                buttonColorLight: '#fff', // default: '#fff'
+                saveInCookies: true, // default: true,
+                label: '🌓', // default: ''
+                autoMatchOsTheme: true // default: true
+            }
+            const darkmode = new Darkmode(options);
+            darkmode.showWidget();
+        </script>
+        
+        
+            <div class="left-toc-container">
+                <nav id="toc" class="bs-docs-sidebar"></nav>
+            </div>
+        
+        <div class="paper">
+            
+            
+            
+            
+                <div class="shadow-drop-2-bottom paper-main">
+                    
+
+
+<div class="header">
+    <div class="header-container">
+        <img style="
+        width: 56px;
+        height: auto;" alt="^-^" cache-control="max-age=86400" class="header-img" src="/img/favicon.png" width="10%"></img>
+        <div class="header-content">
+            <a class="logo" href="/">Leng-CS</a> 
+            <span class="description">test2</span> 
+        </div>
+        
+    </div>
+    
+   
+    <ul class="nav">
+        
+            
+                <li><a href="/">首页</a></li>
+            
+        
+            
+                <li><a href="/list/">文章</a></li>
+            
+        
+            
+                <li><a href="/about/">关于</a></li>
+            
+        
+            
+                <li><a href="/tags/">标签</a></li>
+            
+        
+            
+                <li><a href="/categories/">分类</a></li>
+            
+        
+    </ul>
+</div> 
+        
+                    
+                    
+
+                    
+                    
+                    
+                    <!--说明是文章post页面-->
+                    
+                        <div class="post-main">
+    
+
+    
+        
+            
+                <div class="post-main-title" style="text-align: center;">
+                    DC-1靶机渗透测试讲解
+                </div>
+            
+        
+      
+    
+
+    
+
+        
+            <div class="post-head-meta-center">
+        
+                
+                    <span>最近更新：2024-11-06</span> 
+                
+                
+                    
+                        &nbsp; | &nbsp;
+                    
+                     <span>字数总计：3.2k</span>
+                
+                
+                    
+                        &nbsp; | &nbsp;
+                    
+                    <span>阅读估时：11分钟</span>
+                
+                
+                    
+                        &nbsp; | &nbsp;
+                    
+                    <span id="busuanzi_container_page_pv">
+                        阅读量：<span id="busuanzi_value_page_pv"></span>次
+                    </span>
+                
+            </div>
+    
+
+    <div class="post-md">
+        
+            
+                <ol class="post-toc"><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#DC-1%E9%9D%B6%E6%9C%BA%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95"><span class="post-toc-text">DC-1靶机渗透测试</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#%E4%B8%80%E3%80%81%E4%BF%A1%E6%81%AF%E6%94%B6%E9%9B%86"><span class="post-toc-text">一、信息收集</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#%E4%BA%8C%E3%80%81%E6%BC%8F%E6%B4%9E%E6%9F%A5%E6%89%BE%E5%8F%8A%E5%88%A9%E7%94%A8"><span class="post-toc-text">二、漏洞查找及利用</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#%E4%B8%89%E3%80%81%E8%8E%B7%E5%8F%96flag"><span class="post-toc-text">三、获取flag</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#%E5%9B%9B%E3%80%81%E6%80%BB%E7%BB%93"><span class="post-toc-text">四、总结</span></a></li></ol></li></ol>
+            
+        
+        <div class=".article-gallery"><h1 id="DC-1靶机渗透测试"><a href="#DC-1靶机渗透测试" class="headerlink" title="DC-1靶机渗透测试"></a>DC-1靶机渗透测试</h1><blockquote>
+<p>前言：这是我的第一个靶机教程，刚开始自己打的时候也查询了很多资料，也是一步步学过来的。现在也把自己的学习过程和思路也记录一下，希望对大家有帮助。</p>
+<p>视频讲解：<a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1Co2VYNE6q/">DC-1靶机讲解_哔哩哔哩_bilibili</a></p>
+</blockquote>
+<h2 id="一、信息收集"><a href="#一、信息收集" class="headerlink" title="一、信息收集"></a>一、信息收集</h2><ol>
+<li><p>对目标ip&#x2F;端口进行探测</p>
+<p>使用nmap进行扫描探测：     nmap介绍：nmap是用来探测计算机网络上的主机和服务的一种安全扫描器。为了绘制网络拓扑图，Nmap的发送特制的数据包到目标主机，然后对返回数据包进行分析。Nmap是一款枚举和测试网络的强大工具。      </p>
+<p>nmap使用教程：</p>
+</li>
+<li><p>先查询攻击机ip</p>
+<p>命令：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ifconfig</span><br></pre></td></tr></table></figure>
+
+<a href="/2024/10/30/DC-1%E9%9D%B6%E6%9C%BA%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95/image-20241106182140800.png" class="gallery-item" style="box-shadow: none;"> <img src="/2024/10/30/DC-1%E9%9D%B6%E6%9C%BA%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95/image-20241106182140800.png" class="" title="image-20241106182140800"></a></li>
+</ol>
+<p>​        得到攻击机的ip为：192.168.2.128</p>
+<ol start="3">
+<li><p>收集靶机ip</p>
+<p>因为是靶机，其ip地址我们在创建虚拟机的时候，网络设置和攻击机需要设定成一样的。我们找靶机的ip，就需要在和攻击机的相同网段下查找</p>
+<p>扫一下攻击机所在的网段：</p>
+<p>命令：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">arp-scan -l</span><br></pre></td></tr></table></figure>
+
+<style>.hlxczvoxteek{zoom:80%;}</style><a href="/2024/10/30/DC-1%E9%9D%B6%E6%9C%BA%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95/image-20241106184325161.png" title="image-20241106184325161" class="gallery-item" style="box-shadow: none;"> <img src="/2024/10/30/DC-1%E9%9D%B6%E6%9C%BA%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95/image-20241106184325161.png" class="hlxczvoxteek" alt="image-20241106184325161"></a></li>
+</ol>
+<p>​         查看靶机的ip地址，对应的IP是192.168.2.130</p>
+<ol start="4">
+<li><p>对靶机进行端口探测</p>
+<p>使用nmap扫描：</p>
+<p>命令：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">nmap -sV -p- 192.168.2.130</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>-sV 扫描目标主机端口上运行的软件信息</p>
+<p>-p- 扫描全部端口0-6553</p>
+</blockquote>
+<style>.rqkaxiqbfjgv{zoom:80%;}</style><a href="/2024/10/30/DC-1%E9%9D%B6%E6%9C%BA%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95/image-20241106184334769.png" title="image-20241106184334769" class="gallery-item" style="box-shadow: none;"> <img src="/2024/10/30/DC-1%E9%9D%B6%E6%9C%BA%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95/image-20241106184334769.png" class="rqkaxiqbfjgv" alt="image-20241106184334769"></a>
+
+<p><strong>80端口是常见的业务端口，访问一下</strong></p>
+</li>
+<li><p>访问80端口：192.168.2.130:80</p>
+<a href="/2024/10/30/DC-1%E9%9D%B6%E6%9C%BA%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95/image-20241106184344811.png" class="gallery-item" style="box-shadow: none;"> <img src="/2024/10/30/DC-1%E9%9D%B6%E6%9C%BA%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95/image-20241106184344811.png" class="" title="image-20241106184344811"></a>
+
+<p>使用Wappalyzer插件查看指纹信息：</p>
+<p>CMS是</p>
+<blockquote>
+<p>Drupal  </p>
+<p>Apache 2.2.22</p>
+<p>PHP 5.4.45</p>
+<p>jQuery 1.4.4–&gt;</p>
+</blockquote>
+<p><strong>可以利用cms漏洞来进行突破</strong></p>
+</li>
+</ol>
+<h2 id="二、漏洞查找及利用"><a href="#二、漏洞查找及利用" class="headerlink" title="二、漏洞查找及利用"></a>二、漏洞查找及利用</h2><ol>
+<li><p><strong>什么是cms呢？</strong></p>
+<p>CMS是”Content Management System”的缩写，意为”内容管理系统”。 它采用统一的信息组织的方法即分类，对同一类型的信息进行分类，且每一类信息都可以进行新建（Add）、查看（View）、编辑（Edit）和删除（Delete）四种不同的操作。除了使用分类的方式组织信息以外，又采用了统一的用户和权限管理对信息的使用进行控制，即构成了一个完整的信息组织和管理的体系。内容管理系统是企业信息化建设和电子政务的新宠，也是一个相对较新的市场.<br>    简单来说，就是建的房子的模板，可能是欧式，可能是中式，也可能是小平房<br><strong>为什么要知道cms？</strong></p>
+<p>使用的cms可能会出现漏洞，不同的cms有对应的不同的漏洞，知道了目标网站用的是什么cms，再去网上收集这个cms爆过的漏洞，就可以实现漏洞的利用  </p>
+<p>​        简单来说，知道了这个小区的的模板房是什么模式的，再去找其对应的之前爆过的漏洞，然后进行利用</p>
+</li>
+<li><p>寻找漏洞</p>
+<p>直接百度drupal漏洞，就可以看到其爆过的漏洞</p>
+<style>.cnghgnnwbjex{zoom:80%;}</style><a href="/2024/10/30/DC-1%E9%9D%B6%E6%9C%BA%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95/image-20241106184351291.png" title="image-20241106184351291" class="gallery-item" style="box-shadow: none;"> <img src="/2024/10/30/DC-1%E9%9D%B6%E6%9C%BA%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95/image-20241106184351291.png" class="cnghgnnwbjex" alt="image-20241106184351291"></a>
+
+<p>那我们怎么利用这些漏洞呢？</p>
+</li>
+<li><p>使用Metasploit</p>
+<p>其是目前世界上领先的渗透测试工具，也是信息安全与渗透测试领域最大的开源项目之一。</p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_45138120/article/details/131350703?ops_request_misc=%7B%22request_id%22:%22A46C8A17-987A-41E5-A4E6-F9BA0905C299%22,%22scm%22:%2220140713.130102334..%22%7D&request_id=A46C8A17-987A-41E5-A4E6-F9BA0905C299&biz_id=0&utm_medium=distribute.pc_search_result.none-task-blog-2~all~top_positive~default-1-131350703-null-null.142%5Ev100%5Epc_search_result_base7&utm_term=metasploit&spm=1018.2226.3001.4187">【P3】最强渗透工具 - metasploit（安装配置及使用教程详解）-CSDN博客</a></p>
+<p>简单来说，我们可以利用Metasploit来**<u>查找</u><strong>漏洞，</strong><u>利用</u>**漏洞</p>
+<ul>
+<li><p>使用Metasploit查找漏洞</p>
+<p>kali是自带Metasploit的</p>
+<p>打开Metasploit</p>
+<p>命令：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">msfconsole</span><br></pre></td></tr></table></figure>
+
+<p>再查找drupal的相关漏洞</p>
+<p>命令：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">search Drupal</span><br></pre></td></tr></table></figure>
+
+<style>.mwucspewlnqc{zoom:80%;}</style><a href="/2024/10/30/DC-1%E9%9D%B6%E6%9C%BA%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95/image-20241106184401117.png" title="image-20241106184401117" class="gallery-item" style="box-shadow: none;"> <img src="/2024/10/30/DC-1%E9%9D%B6%E6%9C%BA%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95/image-20241106184401117.png" class="mwucspewlnqc" alt="image-20241106184401117"></a>
+
+<p>这里我们使用第二个</p>
+<p>命令：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">use 2</span><br></pre></td></tr></table></figure>
+
+<a href="/2024/10/30/DC-1%E9%9D%B6%E6%9C%BA%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95/image-20241106184409698.png" class="gallery-item" style="box-shadow: none;"> <img src="/2024/10/30/DC-1%E9%9D%B6%E6%9C%BA%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95/image-20241106184409698.png" class="" title="image-20241106184409698"></a>
+</li>
+<li><p>使用Metasploit利用漏洞</p>
+<ul>
+<li><p>看需要什么必要参数</p>
+<p>命令：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">show missing</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>需要配置目标ip地址</p>
+<p>命令：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">set rhosts 192.168.2.130</span><br></pre></td></tr></table></figure>
+
+
+</li>
+<li><p>运行</p>
+<p>命令：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">run</span><br></pre></td></tr></table></figure>
+
+<a href="/2024/10/30/DC-1%E9%9D%B6%E6%9C%BA%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95/image-20241106184618733.png" class="gallery-item" style="box-shadow: none;"> <img src="/2024/10/30/DC-1%E9%9D%B6%E6%9C%BA%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95/image-20241106184618733.png" class="" title="image-20241106184618733"></a></li>
+</ul>
+<p>这时候我们就利用了drupal的漏洞，进入到了靶机的系统</p>
+<p>先shell</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">shell</span><br></pre></td></tr></table></figure>
+
+<p>再利用python来反弹一个shell，得到可交互的shell</p>
+<p>命令：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">python -c ‘import pty；pty.spawn(“/bin/bash”)’</span><br></pre></td></tr></table></figure>
+
+
+
+<blockquote>
+<p>这个命令利用了pty模块的功能，该模块是Python标准库的一部分，提供了对伪终端（pseudo-terminal）的支持。伪终端允许程序模拟终端交互，就像在命令行界面中操作一样。</p>
+</blockquote>
+<blockquote>
+<blockquote>
+<p>1.导入pty模块‌：首先，它导入pty模块，这是使用伪终端功能的第一步。‌</p>
+<p>2.使用pty.spawn()函数‌：这个函数用于创建一个子进程，并将该子进程与一个伪终端关联起来。在这个例子中，子进程是执行&#x2F;bin&#x2F;bash命令的bash shell。‌</p>
+<p>3.创建交互式shell‌：通过pty.spawn()函数，可以在Python程序中启动一个交互式shell，这样你就可以在Python脚本中执行bash命令，就像在终端中直接输入命令一样。</p>
+</blockquote>
+</blockquote>
+<a href="/2024/10/30/DC-1%E9%9D%B6%E6%9C%BA%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95/image-20241106184606563.png" class="gallery-item" style="box-shadow: none;"> <img src="/2024/10/30/DC-1%E9%9D%B6%E6%9C%BA%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95/image-20241106184606563.png" class="" title="image-20241106184606563"></a></li>
+</ul>
+</li>
+</ol>
+<h2 id="三、获取flag"><a href="#三、获取flag" class="headerlink" title="三、获取flag"></a>三、获取flag</h2><ol>
+<li><p>flag1</p>
+<p>得到shell了，先ls，查看一些文件发现有flag1.txt</p>
+<a href="/2024/10/30/DC-1%E9%9D%B6%E6%9C%BA%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95/image-20241106184628354.png" class="gallery-item" style="box-shadow: none;"> <img src="/2024/10/30/DC-1%E9%9D%B6%E6%9C%BA%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95/image-20241106184628354.png" class="" title="image-20241106184628354"></a>
+
+<p>命令：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cat flag1.txt</span><br></pre></td></tr></table></figure>
+
+<p>得到了flag1，其给的之后的线索是去找cms的配置文件</p>
+</li>
+<li><p>flag2</p>
+<p>不知道drupal的配置文件路径啊？直接网上搜（这就是知道cms的好处）</p>
+<style>.qpvyqnwjvvvm{zoom:80%;}</style><a href="/2024/10/30/DC-1%E9%9D%B6%E6%9C%BA%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95/image-20241106184633626.png" title="image-20241106184633626" class="gallery-item" style="box-shadow: none;"> <img src="/2024/10/30/DC-1%E9%9D%B6%E6%9C%BA%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95/image-20241106184633626.png" class="qpvyqnwjvvvm" alt="image-20241106184633626"></a>
+
+<p>得到配置文件的路径：<strong>sites&#x2F;default&#x2F;settings.php</strong></p>
+<p>cat查看settings.php文件</p>
+<style>.rfnjmggafqmu{zoom:80%;}</style><a href="/2024/10/30/DC-1%E9%9D%B6%E6%9C%BA%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95/image-20241106184641710.png" title="image-20241106184641710" class="gallery-item" style="box-shadow: none;"> <img src="/2024/10/30/DC-1%E9%9D%B6%E6%9C%BA%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95/image-20241106184641710.png" class="rfnjmggafqmu" alt="image-20241106184641710"></a>
+
+<p>发现flag2和数据库的账号密码：</p>
+<blockquote>
+<p>用户名：dbuser</p>
+</blockquote>
+<blockquote>
+<p>密码：R0ck3t</p>
+</blockquote>
+</li>
+<li><p>flag3</p>
+<p>居然知道了数据库的账号密码，登入一下</p>
+<p>命令：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mysql -u dbuser -p R0ck3t</span><br></pre></td></tr></table></figure>
+
+<a href="/2024/10/30/DC-1%E9%9D%B6%E6%9C%BA%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95/image-20241106184659733.png" class="gallery-item" style="box-shadow: none;"> <img src="/2024/10/30/DC-1%E9%9D%B6%E6%9C%BA%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95/image-20241106184659733.png" class="" title="image-20241106184659733"></a>
+
+<blockquote>
+<p>注意：进入了数据库之后，就需要使用数据库的相对于的语句，mysql数据库的查询语句需要在后面加”;”号</p>
+</blockquote>
+<p>1.查看数据库</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">show databases;</span><br></pre></td></tr></table></figure>
+
+<p>发现有两个数据库：</p>
+<p>第一个数据库information_schema</p>
+<p>其是MySQL自带的，它提供了访问数据库元数据的方式。元数据是关于数据的数据，如数据库名或表名，列的数据类型，或访问权限等，通过information_schema我们可以窥透整个MySQL实例的运行情况。</p>
+<p>简单来说，就是储存了一些数据库的基础信息</p>
+<p>具体可以看这篇文章：<a target="_blank" rel="noopener" href="https://www.cnblogs.com/lyftest/p/8034470.html">mysql中information_schema说明 - 一叶扁舟_test - 博客园</a></p>
+<p>第二个数据库drupaldb，很显然，这个数据库是我们这个靶站cms相关的一个数据库，我们可以先看看drupaldb</p>
+<p>2.先需要使用drupaldb</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">use drupaldb;</span><br></pre></td></tr></table></figure>
+
+<p>3.再查看drupaldb</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">show tables;</span><br></pre></td></tr></table></figure>
+
+<style>.fktrgfkwsukt{zoom:80%;}</style><a href="/2024/10/30/DC-1%E9%9D%B6%E6%9C%BA%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95/image-20241106184708267.png" title="image-20241106184708267" class="gallery-item" style="box-shadow: none;"> <img src="/2024/10/30/DC-1%E9%9D%B6%E6%9C%BA%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95/image-20241106184708267.png" class="fktrgfkwsukt" alt="image-20241106184708267"></a>
+
+
+
+<p>发现有个用户表，查看一下</p>
+<p>命令：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">select * from users;</span><br></pre></td></tr></table></figure>
+
+<style>.boolqugtvhys{zoom:80%;}</style><a href="/2024/10/30/DC-1%E9%9D%B6%E6%9C%BA%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95/image-20241106184717198.png" title="image-20241106184717198" class="gallery-item" style="box-shadow: none;"> <img src="/2024/10/30/DC-1%E9%9D%B6%E6%9C%BA%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95/image-20241106184717198.png" class="boolqugtvhys" alt="image-20241106184717198"></a>
+
+<p>可以得到两个用户的用户名和密码，一个是admin的，一个是Fred的。</p>
+<p>这里密码明显是经过加密的，无法直接改密码来获取admin用户的权限。</p>
+<p>所以我们接下来就有两个思路：</p>
+<p>要找到这个加密算法是什么，如果是弱加密算法，可以试试直接破译。然后登入</p>
+<p>还有一种方法：因为它加密密码肯定是有一套源码的，而且大概率是存储在本机（靶机）上，如果我们可以直接找它加密密码的脚本，利用这个脚本，来解密或者更改密码。</p>
+<p>我们试试第二种方法</p>
+<p>先退出数据库（脚本肯定不会存在数据库里面），我们需要去靶机的文件目录查找看看</p>
+<p>先搜索一下以password命名相关的文件（这是一个推测，我们猜加密脚本的命名可能带有password字段啥的）</p>
+<p>命令：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">find  / -name password*</span><br></pre></td></tr></table></figure>
+
+<style>.qpazbitjktwz{zoom:80%;}</style><a href="/2024/10/30/DC-1%E9%9D%B6%E6%9C%BA%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95/image-20241106184725330.png" title="image-20241106184725330" class="gallery-item" style="box-shadow: none;"> <img src="/2024/10/30/DC-1%E9%9D%B6%E6%9C%BA%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95/image-20241106184725330.png" class="qpazbitjktwz" alt="image-20241106184725330"></a>
+
+<p>可以看到var&#x2F;www&#x2F;scripts下有个.sh的脚本。看名字是猜测是以hash加密密码的脚本</p>
+<p><strong>尝试直接运行脚本</strong></p>
+<style>.nnppftrudygp{zoom:80%;}</style><a href="/2024/10/30/DC-1%E9%9D%B6%E6%9C%BA%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95/image-20241106184733127.png" title="image-20241106184733127" class="gallery-item" style="box-shadow: none;"> <img src="/2024/10/30/DC-1%E9%9D%B6%E6%9C%BA%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95/image-20241106184733127.png" class="nnppftrudygp" alt="image-20241106184733127"></a>
+
+<p>发现，我们可以利用这个脚本是可以加密一个我们已知的密码，如”mynewpassword”</p>
+<p>那有什么用呢？<br>如果我们加密一个我们已知的密码，然后再进入数据库更改admin用户的密码，是不是就可以达到登入admin用户的目的</p>
+<p>先得到一个加密后的密码：123456</p>
+<style>.gohtgjnlgqtm{zoom:80%;}</style><a href="/2024/10/30/DC-1%E9%9D%B6%E6%9C%BA%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95/image-20241106184740239.png" title="image-20241106184740239" class="gallery-item" style="box-shadow: none;"> <img src="/2024/10/30/DC-1%E9%9D%B6%E6%9C%BA%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95/image-20241106184740239.png" class="gohtgjnlgqtm" alt="image-20241106184740239"></a>
+
+<p>得到123456的加密后的值了，这时候我们再利用这个加密后的值，替换掉数据库中users的密码，就可以实现登入这个用户了</p>
+<p>这个时候我们再进入数据库，去更改admin的密码</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mysql -u dbuser -p R0ck3t</span><br></pre></td></tr></table></figure>
+
+<p>进入数据库后：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">update users set pass=&#x27;加密后的密码&#x27; where name=&#x27;admin&#x27;;</span><br></pre></td></tr></table></figure>
+
+<p>这个时候，admin的密码就变成123456了（在数据库中还是以加密值的形式存储着）</p>
+<a href="/2024/10/30/DC-1%E9%9D%B6%E6%9C%BA%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95/image-20241106184856240.png" class="gallery-item" style="box-shadow: none;"> <img src="/2024/10/30/DC-1%E9%9D%B6%E6%9C%BA%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95/image-20241106184856240.png" class="" title="image-20241106184856240"></a>
+
+
+
+<p>知道了admin的账户和密码，登入网页看看</p>
+<style>.mqxogbraomxj{zoom:80%;}</style><a href="/2024/10/30/DC-1%E9%9D%B6%E6%9C%BA%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95/image-20241106184904810.png" title="image-20241106184904810" class="gallery-item" style="box-shadow: none;"> <img src="/2024/10/30/DC-1%E9%9D%B6%E6%9C%BA%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95/image-20241106184904810.png" class="mqxogbraomxj" alt="image-20241106184904810"></a>
+
+<p>登入进去，找到了flag3</p>
+</li>
+<li><p>flag4</p>
+<p>看flag4的提示信息，翻译过来就是：</p>
+<blockquote>
+<p>特殊的权限会帮助我们找到passwd，但是需将用到 -exec 命令来找出隐藏的信息</p>
+</blockquote>
+<p>按照意思来，我们需要找到有特殊权限的用户，并且尝试着提权</p>
+<p>这时候我们查看一下靶机有哪些的用户（这个用户和数据库里的admin&#x2F;Fred不是一个概念的，我们要找的是靶机、也就是Linux系统的用户，刚刚数据库里的是drupal这个网站的用户）</p>
+<p>那我们去哪里找有特殊权限的用户呢？</p>
+<p><strong>可以去看看&#x2F;etc&#x2F;passwd文件</strong></p>
+<p>其是Linux系统的用户配置文件，存储了系统中所有用户的基本信息，并且所有用户都可以对此文件执行读(r)操作。</p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/happyjacob/article/details/109701341">Linux &#x2F;etc&#x2F;passwd 内容详解_etcpasswd文件中包含的信息有-CSDN博客</a></p>
+<style>.gksjnesgveod{zoom:80%;}</style><a href="/2024/10/30/DC-1%E9%9D%B6%E6%9C%BA%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95/image-20241106184914148.png" title="image-20241106184914148" class="gallery-item" style="box-shadow: none;"> <img src="/2024/10/30/DC-1%E9%9D%B6%E6%9C%BA%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95/image-20241106184914148.png" class="gksjnesgveod" alt="image-20241106184914148"></a>
+
+<p>发现有名字为flag4的用户</p>
+<p>知道了用户名，其它什么信息也没有，结合flag2的提示，我们试试爆破密码。可以使用hydra工具来爆破密码</p>
+<p>由于主机开放了22ssh端口，使用ssh连接</p>
+<p>命令：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hydra -l flag4 -P /usr/share/john/password.lst 192.168.2.130 ssh</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>-l 指定用户名</p>
+<p>-P 指定要爆破的密码所需要的字典，这里我们用的是hydra自带的字典</p>
+<p>192.168.2.130 ssh 我们需要使用ssh连接靶机，然后爆破密码</p>
+</blockquote>
+<a href="/2024/10/30/DC-1%E9%9D%B6%E6%9C%BA%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95/image-20241106184924203.png" class="gallery-item" style="box-shadow: none;"> <img src="/2024/10/30/DC-1%E9%9D%B6%E6%9C%BA%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95/image-20241106184924203.png" class="" title="image-20241106184924203"></a>
+
+<p>我们通过爆破，得到了flag4用户的密码：orange</p>
+<p>这个时候，我们有了靶机的用户名和其对于的密码，是不是就可以光明正大的登入靶机了（不再像之前我们用msf工具利用cms漏洞登入靶机获取shell）</p>
+<p>如何登入呢？之前我们扫描端口的时候，发现靶机是不是开放了ssh连接，所以，我们可以通过ssh连接登入靶机</p>
+<p>使用ssh连接靶机：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ssh flag@192.168.2.130</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>含义：SSH远程控制服务器作为中介的跳板机，建立本地计算机与特定目标网站之间的加密连接。</p>
+</blockquote>
+<p>然后输入密码orange</p>
+<p>连接上后，我们先ls查看当前目录文件</p>
+<style>.vbjlyqutkojs{zoom:80%;}</style><a href="/2024/10/30/DC-1%E9%9D%B6%E6%9C%BA%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95/image-20241106184947315.png" title="image-20241106184947315" class="gallery-item" style="box-shadow: none;"> <img src="/2024/10/30/DC-1%E9%9D%B6%E6%9C%BA%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95/image-20241106184947315.png" class="vbjlyqutkojs" alt="image-20241106184947315"></a>
+
+<p>发现flag4.txt，查看flag4.txt，得到flag4</p>
+</li>
+<li><p>thefinalflag</p>
+<p>看flag4的提示信息，说到我们能不能以root权限的方法再来一遍？</p>
+<p>其实就是提示我们要进行提权或者越权，这时候我们可以用到suid提权</p>
+<p>SUID概念：命令一旦具有了SUID标志，这个命令在执行的过程的会短暂的获得root权限。</p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_51524329/article/details/121865922">suid提权全解（超细）-CSDN博客</a></p>
+<p>首先，我们先看我们可以使用那些提权命令</p>
+<p>使用find命令查找拥有特殊权限SUID的命令：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">find / -perm -4000</span><br></pre></td></tr></table></figure>
+
+<style>.ystdkpnxrslv{zoom:80%;}</style><a href="/2024/10/30/DC-1%E9%9D%B6%E6%9C%BA%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95/image-20241106184955653.png" title="image-20241106184955653" class="gallery-item" style="box-shadow: none;"> <img src="/2024/10/30/DC-1%E9%9D%B6%E6%9C%BA%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95/image-20241106184955653.png" class="ystdkpnxrslv" alt="image-20241106184955653"></a>
+
+<p>发现find指令可以使用SUID命令，可以利用其进行提权</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">find -name flag4.txt -exec /bin/bash -p \;</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>这个命令是用于在当前目录及其子录中查找名为 “flag4.txt” 的文件，并且在找到每个文件后执行 &#x2F;bin&#x2F;bash -p 命令。</p>
+<p>find：这是一个用于在文件系统中搜索文件和目录的命令。-name flag4.txt：这是 find 命令的选项之一，用于指定要搜索的文件名为 “flag4.txt”。</p>
+<p>-exec：这也是 find 命令的选项之一，它允许在找到每个文件后执行指定的命令。</p>
+<p>&#x2F;bin&#x2F;bash -p：这是要执行的命令。&#x2F;bin&#x2F;bash 是一个常见的 Unix&#x2F;Linux shell，而 -p 选项表示以特权（即以 root 用户）运行 bash。这将打开一个交互式 shell 环境，具有 root 用户权限。</p>
+</blockquote>
+<p>所以，当该命令找到名为 “flag4.txt” 的文件时，它将执行 &#x2F;bin&#x2F;bash -p 命令，从而打开一个特权 shell 环境。</p>
+<style>.uwrvxzaraats{zoom:80%;}</style><a href="/2024/10/30/DC-1%E9%9D%B6%E6%9C%BA%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95/image-20241106185003960.png" title="image-20241106185003960" class="gallery-item" style="box-shadow: none;"> <img src="/2024/10/30/DC-1%E9%9D%B6%E6%9C%BA%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95/image-20241106185003960.png" class="uwrvxzaraats" alt="image-20241106185003960"></a>
+
+<p>使用提权命令,查看我们当前的用户,发现是root用户的权限</p>
+<p>进入root目录</p>
+<p>ls，找到thefinalflag.txt</p>
+</li>
+</ol>
+<h2 id="四、总结"><a href="#四、总结" class="headerlink" title="四、总结"></a>四、总结</h2><style>.tntzxgkqsmcx{zoom:80%;}</style><a href="/2024/10/30/DC-1%E9%9D%B6%E6%9C%BA%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95/image-20241106185010323.png" title="image-20241106185010323" class="gallery-item" style="box-shadow: none;"> <img src="/2024/10/30/DC-1%E9%9D%B6%E6%9C%BA%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95/image-20241106185010323.png" class="tntzxgkqsmcx" alt="image-20241106185010323"></a>
+
+
+
+</div>
+    </div>
+
+    <div class="post-meta">
+        <i>
+        
+            <span>2024-10-30</span>
+            
+                <span>该篇文章被 Leng-CS</span>
+            
+            
+                <span>打上标签:
+                    
+                    
+                        <a href='/tags/%E9%9D%B6%E6%9C%BA%E8%AE%B2%E8%A7%A3/'>
+                            靶机讲解
+                        </a>
+                    
+                </span>
+             
+             
+        
+        </i>
+    </div>
+    <br>
+    
+    
+        
+            
+    
+            <div class="post-footer-pre-next">
+                
+
+                
+                    <span class="post-footer-pre-next-last-span-right">下一篇：<a href="/2024/10/29/hello-world/">Hello World</a>
+                    </span>
+                
+            </div>
+    
+        
+    
+
+    
+        
+
+     
+</div>
+
+
+
+                                      
+                    
+                    
+                    <div class="footer">
+    
+        <span> 
+            © 2005-2024 China 
+
+            
+                
+
+            
+        </span>
+       
+    
+</div>
+
+
+
+<!--这是指一条线往下的内容-->
+<div class="footer-last">
+    
+            <span>🌊test2🌊</span>
+            
+    
+</div>
+
+
+    
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
+
+    <!--目录-->
+    
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.7.2/jquery.min.js" type="text/javascript" ></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js" type="text/javascript" ></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.tocify/1.9.0/javascripts/jquery.tocify.min.js" type="text/javascript" ></script>
+        
+<script src="/js/toc.js"></script>
+
+    
+
+    
+<script src="/js/randomHeaderContent.js"></script>
+
+    <!--回到顶部按钮-->
+    
+        
+<script src="/js/returnToTop.js"></script>
+
+    
+
+    
+        
+<script src="/js/returnToLastPage.js"></script>
+
+    
+
+
+
+
+
+<script src="/js/lightgallery/lightgallery.umd.min.js"></script>
+
+
+
+<script src="/js/lightgallery/plugins/lg-thumbnail.umd.min.js"></script>
+
+
+
+<script src="/js/lightgallery/plugins/lg-fullscreen.umd.min.js"></script>
+
+
+<script src="/js/lightgallery/plugins/lg-autoplay.umd.min.js"></script>
+
+
+<script src="/js/lightgallery/plugins/lg-zoom.umd.min.js"></script>
+
+
+<script src="/js/lightgallery/plugins/lg-rotate.umd.min.js"></script>
+
+
+<script src="/js/lightgallery/plugins/lg-paper.umd.min.js"></script>
+
+
+
+
+<script type="text/javascript">
+     
+    if (typeof lightGallery !== "undefined") {
+        var options1 = {
+            selector: '.gallery-item',
+            plugins: [lgThumbnail, lgFullscreen, lgAutoplay, lgZoom, lgRotate, lgPager], // 启用插件
+            thumbnail: true,          // 显示缩略图
+            zoom: true,               // 启用缩放功
+            rotate: true,             // 启用旋转功能能
+            autoplay: true,        // 启用自动播放功能
+            fullScreen: true,      // 启用全屏功能
+            pager: false, //页码,
+            zoomFromOrigin: true,   // 从原始位置缩放
+            actualSize: true,       // 启用查看实际大小的功能
+            enableZoomAfter: 300,    // 延迟缩放，确保图片加载完成后可缩放
+        };
+        lightGallery(document.getElementsByClassName('.article-gallery')[0], options1); // 修复选择器
+    }
+    
+</script>
+
+
+    <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script> 
+
+                </div>
+            
+            
+                <!-- 回到顶部的按钮-->  
+                <div class="progress-wrap shadow-drop-2-bottom">
+                    <svg class="progress-circle svg-content" width="100%" height="100%" viewBox="-1 -1 102 102">
+                        <path d="M50,1 a49,49 0 0,1 0,98 a49,49 0 0,1 0,-98"/>
+                    </svg>
+                </div>
+            
+            
+                <!-- 返回的按钮-->  
+                <div class="return-to-last-progress-wrap shadow-drop-2-bottom">
+                    <svg class="progress-circle svg-content" width="100%" height="100%" viewBox="-1 -1 102 102">
+                        <path d="M50,1 a49,49 0 0,1 0,98 a49,49 0 0,1 0,-98"/>
+                    </svg>
+                </div>
+            
+    </body>
+</html>
