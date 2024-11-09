@@ -1,0 +1,483 @@
+<!DOCTYPE html>
+<html lang="zh">
+    
+    <head>
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" name="viewport" />
+    <meta name="description" content="hexo图片无法加载究极解决方案" />
+    <meta name="hexo-theme-A4" content="v1.9.6" />
+    <link rel="alternate icon" type="image/webp" href="/img/favicon.png">
+    <title>Leng-CS | Personal Blog</title>
+
+    
+        
+<link rel="stylesheet" href="/css/highlight/style1.css">
+
+        
+<link rel="stylesheet" href="/css/reset.css">
+
+        
+<link rel="stylesheet" href="/css/markdown.css">
+
+        
+<link rel="stylesheet" href="/css/fonts.css">
+ 
+         <!--注意：首页既不是post也不是page-->
+        
+        
+        
+<link rel="stylesheet" href="/css/ui.css">
+ 
+        
+<link rel="stylesheet" href="/css/style.css">
+
+
+        
+            <!--返回顶部css-->
+            
+<link rel="stylesheet" href="/css/returnToTop.css">
+
+            
+<link rel="stylesheet" href="/css/unicons.css">
+
+        
+        
+            <!--目录-->
+            
+<link rel="stylesheet" href="/css/toc.css">
+
+        
+    
+
+    
+        
+<link rel="stylesheet" href="/css/returnToLastPage.css">
+
+    
+    
+   
+<link rel="stylesheet" href="/css/lightgallery-bundle.min.css">
+
+
+<meta name="generator" content="Hexo 7.3.0"></head>
+    
+    
+
+    
+    
+
+
+
+    
+
+    
+    
+
+    
+    
+    
+    <body>
+        <script src="/js/darkmode-js.min.js"></script>
+        
+        <script>
+            const options = {
+                bottom: '40px', // default: '32px'
+                right: 'unset', // default: '32px'
+                left: '42px', // default: 'unset'
+                time: '0.3s', // default: '0.3s'
+                mixColor: '#fff', // default: '#fff'
+                backgroundColor: ' #e4e4e4 ',  // default: '#fff'
+                buttonColorDark: '#100f2c',  // default: '#100f2c'
+                buttonColorLight: '#fff', // default: '#fff'
+                saveInCookies: true, // default: true,
+                label: '🌓', // default: ''
+                autoMatchOsTheme: true // default: true
+            }
+            const darkmode = new Darkmode(options);
+            darkmode.showWidget();
+        </script>
+        
+        
+            <div class="left-toc-container">
+                <nav id="toc" class="bs-docs-sidebar"></nav>
+            </div>
+        
+        <div class="paper">
+            
+            
+            
+            
+                <div class="shadow-drop-2-bottom paper-main">
+                    
+
+
+<div class="header">
+    <div class="header-container">
+        <img style="
+        width: 56px;
+        height: auto;" alt="^-^" cache-control="max-age=86400" class="header-img" src="/img/favicon.png" width="10%"></img>
+        <div class="header-content">
+            <a class="logo" href="/">Leng-CS</a> 
+            <span class="description">test2</span> 
+        </div>
+        
+    </div>
+    
+   
+    <ul class="nav">
+        
+            
+                <li><a href="/">首页</a></li>
+            
+        
+            
+                <li><a href="/list/">文章</a></li>
+            
+        
+            
+                <li><a href="/about/">关于</a></li>
+            
+        
+            
+                <li><a href="/tags/">标签</a></li>
+            
+        
+            
+                <li><a href="/categories/">分类</a></li>
+            
+        
+    </ul>
+</div> 
+        
+                    
+                    
+
+                    
+                    
+                    
+                    <!--说明是文章post页面-->
+                    
+                        <div class="post-main">
+    
+
+    
+        
+            
+                <div class="post-main-title" style="text-align: center;">
+                    hexo图片无法加载究极解决方案
+                </div>
+            
+        
+      
+    
+
+    
+
+        
+            <div class="post-head-meta-center">
+        
+                
+                    <span>最近更新：2024-11-09</span> 
+                
+                
+                    
+                        &nbsp; | &nbsp;
+                    
+                     <span>字数总计：1.4k</span>
+                
+                
+                    
+                        &nbsp; | &nbsp;
+                    
+                    <span>阅读估时：5分钟</span>
+                
+                
+                    
+                        &nbsp; | &nbsp;
+                    
+                    <span id="busuanzi_container_page_pv">
+                        阅读量：<span id="busuanzi_value_page_pv"></span>次
+                    </span>
+                
+            </div>
+    
+
+    <div class="post-md">
+        
+            
+                <ol class="post-toc"><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#Hexo%E5%9B%BE%E7%89%87%E6%97%A0%E6%B3%95%E5%8A%A0%E8%BD%BD%E7%A9%B6%E6%9E%81%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88"><span class="post-toc-text">Hexo图片无法加载究极解决方案</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#%E4%B8%80%E3%80%81%E5%8E%9F%E7%90%86"><span class="post-toc-text">一、原理</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#%E4%BA%8C%E3%80%81%E8%A7%A3%E5%86%B3%E6%96%B9%E6%B3%95"><span class="post-toc-text">二、解决方法</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#%E4%B8%89%E3%80%81%E6%AD%A3%E7%A1%AE%E5%A7%BF%E5%8A%BF"><span class="post-toc-text">三、正确姿势</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#%E5%9B%9B%E3%80%81%E5%85%B6%E4%BB%96%E9%97%AE%E9%A2%98"><span class="post-toc-text">四、其他问题</span></a></li></ol></li></ol>
+            
+        
+        <div class=".article-gallery"><h1 id="Hexo图片无法加载究极解决方案"><a href="#Hexo图片无法加载究极解决方案" class="headerlink" title="Hexo图片无法加载究极解决方案"></a>Hexo图片无法加载究极解决方案</h1><h2 id="一、原理"><a href="#一、原理" class="headerlink" title="一、原理"></a>一、原理</h2><ol>
+<li><p>许多朋友在使用hexo框架结合github搭建自己的博客网站的时候，在本地写好md文档，当hexo s本地运行的时候，图片无法显示，hexo d上传到Github上的时候也是如此。</p>
+<p>原因就是<strong>在md文档里面，你的图片不是像我们写word文档或者ppt的时候和文档粘在一起保存的，而是一串图片的路径：</strong></p>
+</li>
+</ol>
+<a href="/2024/11/08/hexo%E5%9B%BE%E7%89%87%E6%97%A0%E6%B3%95%E5%8A%A0%E8%BD%BD%E7%A9%B6%E6%9E%81%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88/image-20241108211750851.png" class="gallery-item" style="box-shadow: none;"> <img src="/2024/11/08/hexo%E5%9B%BE%E7%89%87%E6%97%A0%E6%B3%95%E5%8A%A0%E8%BD%BD%E7%A9%B6%E6%9E%81%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88/image-20241108211750851.png" class="" title="image-20241108211750851"></a>
+
+<ol start="2">
+<li><p><strong>图片存在了本地，md文档上传到Github，md文档里面的图片路径还是本地路径，所以显示不</strong>，能理解。</p>
+<p>但是为什么我们本地hexo s调试的时候，图片还显示不了呢？</p>
+<p>原因就是展现在网站上的不是md文档，而是html文件，对于图片的引用，<strong>语法需要转换，而这个转换就是hexo帮我们做的</strong>，也就是当我们运行hexo g的时候做的事情，而其正常实现需要用到一个插件（这是个重点，后面会说）</p>
+</li>
+</ol>
+<h2 id="二、解决方法"><a href="#二、解决方法" class="headerlink" title="二、解决方法"></a>二、解决方法</h2><ol>
+<li><p>我们先解决图片储存问题</p>
+<p>1.1  我们<strong>先将  _config.yml  文件中的  post_asset_folder  选项设为  true</strong></p>
+<style>.mjfkwuublsjk{zoom: 80%;}</style><a href="/2024/11/08/hexo%E5%9B%BE%E7%89%87%E6%97%A0%E6%B3%95%E5%8A%A0%E8%BD%BD%E7%A9%B6%E6%9E%81%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88/image-20241109164859299.png" title="image-20241109164859299" class="gallery-item" style="box-shadow: none;"> <img src="/2024/11/08/hexo%E5%9B%BE%E7%89%87%E6%97%A0%E6%B3%95%E5%8A%A0%E8%BD%BD%E7%A9%B6%E6%9E%81%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88/image-20241109164859299.png" class="mjfkwuublsjk" alt="image-20241109164859299"></a>
+
+<p>该操作的目的就是在使用<code>hexo new xxx</code>指令新建md文档博文时，在相同路径下同步创建一个<code>xxx</code>文件夹，而<code>xxx</code>文件夹就是用来存放新建md文档里的图片的</p>
+<a href="/2024/11/08/hexo%E5%9B%BE%E7%89%87%E6%97%A0%E6%B3%95%E5%8A%A0%E8%BD%BD%E7%A9%B6%E6%9E%81%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88/image-20241109165222711.png" class="gallery-item" style="box-shadow: none;"> <img src="/2024/11/08/hexo%E5%9B%BE%E7%89%87%E6%97%A0%E6%B3%95%E5%8A%A0%E8%BD%BD%E7%A9%B6%E6%9E%81%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88/image-20241109165222711.png" class="" title="image-20241109165222711"></a>
+
+<p>就像这样，新建的md文档和其对于的同名文件夹都在&#x2F;source&#x2F;_posts路径下</p>
+<p>1.2  但如果你习惯不用hexo new xxx指令创建新md文档，而是直接打开typora写然后保存到&#x2F;source&#x2F;_posts下，这个时候你就需要自己手动创建一个<strong>同名的文件夹</strong>才可以。</p>
+</li>
+<li><p>解决图片路径问题</p>
+<p>  typora的图片插入的语法我是一般不会用的，大多数时候就是复制粘贴图片到md文档里面。这个时候我们再慢慢修改路径到上面我们创建的文件夹下面就太麻烦了。</p>
+<p>我们可以通过以下设置来舒舒服服按照简单粗暴的复制粘贴插入图片：</p>
+<p><strong>打开typora，点击文件，点击偏好设置，点击图像</strong></p>
+<a href="/2024/11/08/hexo%E5%9B%BE%E7%89%87%E6%97%A0%E6%B3%95%E5%8A%A0%E8%BD%BD%E7%A9%B6%E6%9E%81%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88/image-20241109170528475.png" class="gallery-item" style="box-shadow: none;"> <img src="/2024/11/08/hexo%E5%9B%BE%E7%89%87%E6%97%A0%E6%B3%95%E5%8A%A0%E8%BD%BD%E7%A9%B6%E6%9E%81%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88/image-20241109170528475.png" class="" title="image-20241109170528475"></a>
+
+<p>第一个，将图片复制到指定路径.&#x2F;$(filename)的效果就是：<strong>我们粘贴图片到md文档的时候，typora会自动把图片再复制一份到我们上面创建的同名文件夹下</strong></p>
+<p>这样的好处还有一点，就是也不用我们自己创建同名文件夹了，typora会自己帮我们创建（有的话就复制到这里面）（<strong>但 _config.yml文件中的post_asset_folder选项还是得设为 true，这是必须的</strong>）</p>
+<p>效果就像这样：</p>
+<style>.fmckjosnlfms{zoom:80%;}</style><a href="/2024/11/08/hexo%E5%9B%BE%E7%89%87%E6%97%A0%E6%B3%95%E5%8A%A0%E8%BD%BD%E7%A9%B6%E6%9E%81%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88/image-20241109171056412.png" title="image-20241109171056412" class="gallery-item" style="box-shadow: none;"> <img src="/2024/11/08/hexo%E5%9B%BE%E7%89%87%E6%97%A0%E6%B3%95%E5%8A%A0%E8%BD%BD%E7%A9%B6%E6%9E%81%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88/image-20241109171056412.png" class="fmckjosnlfms" alt="image-20241109171056412"></a>
+
+
+</li>
+<li><p>解决md文档转换到html文档路径不一样的问题</p>
+<p>转换需要用到<strong>hexo-asset-img</strong>插件</p>
+<p>这时候我们需要在博客的文件夹下启动命令行，下载插件hexo-asset-img：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install hexo-asset-img --save</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>[!IMPORTANT]</p>
+<p>注意！！！！是<strong>hexo-asset-img</strong>，<strong>不是</strong>其他文章里写的<strong>hexo-asset-image</strong>！！！（这个插件已经年老失修了，这也是很多人安装了插件图片还是显示不了的原因）</p>
+</blockquote>
+<p>安装后，去&#x2F;node_modules文件下看是否下载成功：</p>
+<style>.ytjwqblvevjg{zoom:50%;}</style><a href="/2024/11/08/hexo%E5%9B%BE%E7%89%87%E6%97%A0%E6%B3%95%E5%8A%A0%E8%BD%BD%E7%A9%B6%E6%9E%81%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88/image-20241109171837242.png" title="image-20241109171837242" class="gallery-item" style="box-shadow: none;"> <img src="/2024/11/08/hexo%E5%9B%BE%E7%89%87%E6%97%A0%E6%B3%95%E5%8A%A0%E8%BD%BD%E7%A9%B6%E6%9E%81%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88/image-20241109171837242.png" class="ytjwqblvevjg" alt="image-20241109171837242"></a>
+
+<blockquote>
+<p>[!IMPORTANT]</p>
+<p>如果这个文件夹下还有<strong>hexo-asset-image</strong>，要把它删掉！</p>
+</blockquote>
+</li>
+</ol>
+<h2 id="三、正确姿势"><a href="#三、正确姿势" class="headerlink" title="三、正确姿势"></a>三、正确姿势</h2><p>通过上面的设置之后，正常情况下，你写文章的操作应该是：</p>
+<ol>
+<li><p>在&#x2F;source&#x2F;_posts文件夹下新建xxx.md，用typora打开，开始写作</p>
+</li>
+<li><p>当你在md文档里面粘贴一张图片的时候，typora会帮你在同目录下新建同名文件夹，用来存储这张图片，而且语法里面的路径是这个同名文件夹的路径</p>
+<a href="/2024/11/08/hexo%E5%9B%BE%E7%89%87%E6%97%A0%E6%B3%95%E5%8A%A0%E8%BD%BD%E7%A9%B6%E6%9E%81%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88/image-20241109173422456.png" class="gallery-item" style="box-shadow: none;"> <img src="/2024/11/08/hexo%E5%9B%BE%E7%89%87%E6%97%A0%E6%B3%95%E5%8A%A0%E8%BD%BD%E7%A9%B6%E6%9E%81%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88/image-20241109173422456.png" class="" title="image-20241109173422456"></a>
+</li>
+<li><p>写完文章，当你使用hexo g的时候，<strong>hexo-asset-image</strong>插件会帮你把md文档里面的图片路径的语法，转换为html的语法</p>
+</li>
+<li><p>hexo s 本地调试没问题，图片正常显示</p>
+</li>
+<li><p>hexo d 上传到github，与此同时，存储图片的文件夹也一同上传到github，而且路径也对，语法也对。图片正常显示</p>
+</li>
+</ol>
+<h2 id="四、其他问题"><a href="#四、其他问题" class="headerlink" title="四、其他问题"></a>四、其他问题</h2><p>  上面的种种设置，有一个关键的问题，<strong>就是只对&#x2F;source&#x2F;_posts文件夹下的md文档管用</strong>，但如果我想在**<u>其它页面（如首页）显示图片</u>**，还是会出现问题</p>
+<p>那么如何解决呢？</p>
+<ol>
+<li><p>上面的步骤一个不落</p>
+</li>
+<li><p>假如我需要修改&#x2F;source&#x2F;index目录下的index.md文档，并在里面添加图片xxx.png</p>
+</li>
+<li><p><strong>需要在&#x2F;source目录下新建images文件夹</strong>，并把需要粘贴的图片粘贴到这里面</p>
+</li>
+<li><p>再回到md文档里面，使用语法</p>
+</li>
+</ol>
+   <figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">![<span class="string">图片标题</span>](<span class="link">/images/xxx.png</span>)</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>[!NOTE]</p>
+<p>可能在typora下图片无法显示，但是hexo g后，hexo s 本地运行和hexo d上传到GitHub，图片都是正常显示的</p>
+</blockquote>
+<p>这样做的结果就是，当你需要在非博客文章的md文档下插入图片的时候，利用上面的语法引用images文件夹下的图片就可以了，<strong>实现了  博客md文章  和  非博客md文档  里面图片的分开管理。</strong> </p>
+<ol>
+<li>博客md文章的图片，就存储在  <strong>&#x2F;source&#x2F;_posts  的同名文件夹</strong>下面。</li>
+<li>非博客md文档的图片，保存在  <strong>&#x2F;source&#x2F;images</strong> 下面，使用<strong>上面的语法进行引用</strong>。（相比于1方法，确实比较麻烦，但是起码图片能显示了）</li>
+</ol>
+<p>还有什么问题欢迎提问，有什么其他更好的方法解决也欢迎提出！！！！</p>
+</div>
+    </div>
+
+    <div class="post-meta">
+        <i>
+        
+            <span>2024-11-08</span>
+            
+                <span>该篇文章被 Leng-CS</span>
+            
+            
+                <span>打上标签:
+                    
+                    
+                        <a href='/tags/hexo/'>
+                            hexo
+                        </a>
+                    
+                </span>
+             
+             
+        
+        </i>
+    </div>
+    <br>
+    
+    
+        
+            
+    
+            <div class="post-footer-pre-next">
+                
+
+                
+                    <span class="post-footer-pre-next-last-span-right">下一篇：<a href="/2024/10/30/DC-1%E9%9D%B6%E6%9C%BA%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95/">DC-1靶机渗透测试讲解</a>
+                    </span>
+                
+            </div>
+    
+        
+    
+
+    
+        
+
+     
+</div>
+
+
+
+                                      
+                    
+                    
+                    <div class="footer">
+    
+        <span> 
+            © 2004-2024 China 
+
+            
+                
+
+            
+        </span>
+       
+    
+</div>
+
+
+
+<!--这是指一条线往下的内容-->
+<div class="footer-last">
+    
+            <span>🌊🌊</span>
+            
+    
+</div>
+
+
+    
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
+
+    <!--目录-->
+    
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.7.2/jquery.min.js" type="text/javascript" ></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js" type="text/javascript" ></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.tocify/1.9.0/javascripts/jquery.tocify.min.js" type="text/javascript" ></script>
+        
+<script src="/js/toc.js"></script>
+
+    
+
+    
+<script src="/js/randomHeaderContent.js"></script>
+
+    <!--回到顶部按钮-->
+    
+        
+<script src="/js/returnToTop.js"></script>
+
+    
+
+    
+        
+<script src="/js/returnToLastPage.js"></script>
+
+    
+
+
+
+
+
+<script src="/js/lightgallery/lightgallery.umd.min.js"></script>
+
+
+
+<script src="/js/lightgallery/plugins/lg-thumbnail.umd.min.js"></script>
+
+
+
+<script src="/js/lightgallery/plugins/lg-fullscreen.umd.min.js"></script>
+
+
+<script src="/js/lightgallery/plugins/lg-autoplay.umd.min.js"></script>
+
+
+<script src="/js/lightgallery/plugins/lg-zoom.umd.min.js"></script>
+
+
+<script src="/js/lightgallery/plugins/lg-rotate.umd.min.js"></script>
+
+
+<script src="/js/lightgallery/plugins/lg-paper.umd.min.js"></script>
+
+
+
+
+<script type="text/javascript">
+     
+    if (typeof lightGallery !== "undefined") {
+        var options1 = {
+            selector: '.gallery-item',
+            plugins: [lgThumbnail, lgFullscreen, lgAutoplay, lgZoom, lgRotate, lgPager], // 启用插件
+            thumbnail: true,          // 显示缩略图
+            zoom: true,               // 启用缩放功
+            rotate: true,             // 启用旋转功能能
+            autoplay: true,        // 启用自动播放功能
+            fullScreen: true,      // 启用全屏功能
+            pager: false, //页码,
+            zoomFromOrigin: true,   // 从原始位置缩放
+            actualSize: true,       // 启用查看实际大小的功能
+            enableZoomAfter: 300,    // 延迟缩放，确保图片加载完成后可缩放
+        };
+        lightGallery(document.getElementsByClassName('.article-gallery')[0], options1); // 修复选择器
+    }
+    
+</script>
+
+
+    <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script> 
+
+                </div>
+            
+            
+                <!-- 回到顶部的按钮-->  
+                <div class="progress-wrap shadow-drop-2-bottom">
+                    <svg class="progress-circle svg-content" width="100%" height="100%" viewBox="-1 -1 102 102">
+                        <path d="M50,1 a49,49 0 0,1 0,98 a49,49 0 0,1 0,-98"/>
+                    </svg>
+                </div>
+            
+            
+                <!-- 返回的按钮-->  
+                <div class="return-to-last-progress-wrap shadow-drop-2-bottom">
+                    <svg class="progress-circle svg-content" width="100%" height="100%" viewBox="-1 -1 102 102">
+                        <path d="M50,1 a49,49 0 0,1 0,98 a49,49 0 0,1 0,-98"/>
+                    </svg>
+                </div>
+            
+    </body>
+</html>
