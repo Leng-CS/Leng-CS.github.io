@@ -1,0 +1,631 @@
+<!DOCTYPE html>
+<html lang="zh">
+    
+    <head>
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" name="viewport" />
+    <meta name="description" content="文件上传原生态漏洞详解（无图精炼版)" />
+    <meta name="hexo-theme-A4" content="v1.9.6" />
+    <link rel="alternate icon" type="image/webp" href="/img/favicon.png">
+    <title>Leng-CS | Personal Blog</title>
+
+    
+        
+<link rel="stylesheet" href="/css/highlight/style1.css">
+
+        
+<link rel="stylesheet" href="/css/reset.css">
+
+        
+<link rel="stylesheet" href="/css/markdown.css">
+
+        
+<link rel="stylesheet" href="/css/fonts.css">
+ 
+         <!--注意：首页既不是post也不是page-->
+        
+        
+        
+<link rel="stylesheet" href="/css/ui.css">
+ 
+        
+<link rel="stylesheet" href="/css/style.css">
+
+
+        
+            <!--返回顶部css-->
+            
+<link rel="stylesheet" href="/css/returnToTop.css">
+
+            
+<link rel="stylesheet" href="/css/unicons.css">
+
+        
+        
+            <!--目录-->
+            
+<link rel="stylesheet" href="/css/toc.css">
+
+        
+    
+
+    
+        
+<link rel="stylesheet" href="/css/returnToLastPage.css">
+
+    
+    
+   
+<link rel="stylesheet" href="/css/lightgallery-bundle.min.css">
+
+
+<meta name="generator" content="Hexo 7.3.0"></head>
+    
+    
+
+    
+    
+
+
+
+    
+
+    
+    
+
+    
+    
+    
+    <body>
+        <script src="/js/darkmode-js.min.js"></script>
+        
+        <script>
+            const options = {
+                bottom: '40px', // default: '32px'
+                right: 'unset', // default: '32px'
+                left: '42px', // default: 'unset'
+                time: '0.3s', // default: '0.3s'
+                mixColor: '#fff', // default: '#fff'
+                backgroundColor: ' #e4e4e4 ',  // default: '#fff'
+                buttonColorDark: '#100f2c',  // default: '#100f2c'
+                buttonColorLight: '#fff', // default: '#fff'
+                saveInCookies: true, // default: true,
+                label: '🌓', // default: ''
+                autoMatchOsTheme: true // default: true
+            }
+            const darkmode = new Darkmode(options);
+            darkmode.showWidget();
+        </script>
+        
+        
+            <div class="left-toc-container">
+                <nav id="toc" class="bs-docs-sidebar"></nav>
+            </div>
+        
+        <div class="paper">
+            
+            
+            
+            
+                <div class="shadow-drop-2-bottom paper-main">
+                    
+
+
+<div class="header">
+    <div class="header-container">
+        <img style="
+        width: 56px;
+        height: auto;" alt="^-^" cache-control="max-age=86400" class="header-img" src="/img/favicon.png" width="10%"></img>
+        <div class="header-content">
+            <a class="logo" href="/">Leng-CS</a> 
+            <span class="description">test2</span> 
+        </div>
+        
+    </div>
+    
+   
+    <ul class="nav">
+        
+            
+                <li><a href="/">首页</a></li>
+            
+        
+            
+                <li><a href="/list/">文章</a></li>
+            
+        
+            
+                <li><a href="/about/">关于</a></li>
+            
+        
+            
+                <li><a href="/tags/">标签</a></li>
+            
+        
+            
+                <li><a href="/categories/">分类</a></li>
+            
+        
+    </ul>
+</div> 
+        
+                    
+                    
+
+                    
+                    
+                    
+                    <!--说明是文章post页面-->
+                    
+                        <div class="post-main">
+    
+
+    
+        
+            
+                <div class="post-main-title" style="text-align: center;">
+                    文件上传原生态漏洞详解（无图精炼版)
+                </div>
+            
+        
+      
+    
+
+    
+
+        
+            <div class="post-head-meta-center">
+        
+                
+                    <span>最近更新：2024-11-16</span> 
+                
+                
+                    
+                        &nbsp; | &nbsp;
+                    
+                     <span>字数总计：3.1k</span>
+                
+                
+                    
+                        &nbsp; | &nbsp;
+                    
+                    <span>阅读估时：11分钟</span>
+                
+                
+                    
+                        &nbsp; | &nbsp;
+                    
+                    <span id="busuanzi_container_page_pv">
+                        阅读量：<span id="busuanzi_value_page_pv"></span>次
+                    </span>
+                
+            </div>
+    
+
+    <div class="post-md">
+        
+            
+                <ol class="post-toc"><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0%E5%8E%9F%E7%94%9F%E6%80%81%E6%BC%8F%E6%B4%9E%E8%AF%A6%E8%A7%A3%EF%BC%88%E6%97%A0%E5%9B%BE%E7%B2%BE%E7%82%BC%E7%89%88"><span class="post-toc-text">文件上传原生态漏洞详解（无图精炼版)</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#%E9%BB%91%E5%90%8D%E5%8D%95%E7%B1%BB%E5%9E%8B%EF%BC%9A"><span class="post-toc-text">黑名单类型：</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#%E7%99%BD%E5%90%8D%E5%8D%95%E7%B1%BB%E5%9E%8B%EF%BC%9A"><span class="post-toc-text">白名单类型：</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#%E5%85%B6%E4%BB%96%E7%B1%BB%E5%9E%8B%EF%BC%9A"><span class="post-toc-text">其他类型：</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#%E5%AE%89%E5%85%A8%E7%AD%96%E7%95%A5"><span class="post-toc-text">安全策略</span></a></li></ol></li></ol>
+            
+        
+        <div class=".article-gallery"><h1 id="文件上传原生态漏洞详解（无图精炼版"><a href="#文件上传原生态漏洞详解（无图精炼版" class="headerlink" title="文件上传原生态漏洞详解（无图精炼版)"></a>文件上传原生态漏洞详解（无图精炼版)</h1><p>最终目的：通过各种绕过和漏洞利用，上传木马文件并运行</p>
+<ol>
+<li><p><strong>前端验证</strong></p>
+<ol>
+<li><p>1 原理：</p>
+<p>因为是在前端验证上传文件的格式，如只允许上传png文件，这时候如果修改前端的验证逻辑，如允许上传php格式的文件，则可以实现文件上传漏洞。</p>
+</li>
+<li><p>2 怎么测试：</p>
+<p>上传php文件并抓包，发现都没有发包，说明文件在前端就已经被拦截了，此时可以判断是前端验证类型</p>
+</li>
+<li><p>3 怎么利用：</p>
+<p>查看前端代码，直接修改代码逻辑，使其可以通过php文件；或者使用js代码禁用工具，直接把前端验证的代码给禁用了。然后再上传一句话木马的php文件。</p>
+</li>
+</ol>
+</li>
+</ol>
+<h2 id="黑名单类型："><a href="#黑名单类型：" class="headerlink" title="黑名单类型："></a>黑名单类型：</h2><p>​	黑名单：不允许上传某某后缀的文件，则需要通过各种方式形成欺骗，绕过黑名单</p>
+<ol>
+<li><p><strong>.htaccess类型</strong></p>
+<ol>
+<li>1 原理</li>
+</ol>
+<p>利用<strong>Apache服务器</strong>.htaccess的文件特性：</p>
+<blockquote>
+<p>.htaccess是一个纯文本文件，它里面存放着Apache服务器配置相关的指令。</p>
+</blockquote>
+<blockquote>
+<p>其主要的作用有：URL重写、自定义错误页面、MIME类型配置以及访问权限控制等。主要体现在伪静态的应用、图片防盗链、自定义404错误页面、阻止&#x2F;允许特定IP&#x2F;IP段、目录浏览与主页、禁止访问指定文件类型、文件密码保护等。</p>
+</blockquote>
+<p>如果先上传了一个.htaccess文件，而且在.htaccess文件里面写上：将png文件解析成php文件代码并执行。这时候我们上传的包含php代码的png图片则会被执行。</p>
+<ol>
+<li>2 怎么测试</li>
+</ol>
+<p>当后端也有文件格式的校验（如加了黑名单，禁止.asp、.aspx、.php、.jsp、phtml、php3、php4、php5等各式各样的类型上传），而且服务器是Apache这时候可以考虑试试.htaccess类型</p>
+<ol>
+<li>3 怎么利用</li>
+</ol>
+<p>假如前端允许png文件上传</p>
+<p>我们写一个.htaccess文件（用notepad++创建），里面的内容是：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&lt;FilesMatch &quot;1.png&quot;&gt; </span><br><span class="line"></span><br><span class="line"> SetHandler application/x-httpd-php </span><br><span class="line"></span><br><span class="line">&lt;/FilesMatch&gt;</span><br></pre></td></tr></table></figure>
+
+<p>代码的意思是：</p>
+<blockquote>
+<p>在同目录下匹配文件名为1.png的文件</p>
+<p>将1.png文件以php代码执行</p>
+</blockquote>
+<p>这个时候我们再上传一张写有php一句话木马的1.png图片</p>
+<p>查看是否上传成功，找到文件上传的路径，再webshell连接工具连接</p>
+</li>
+<li><p><strong>后缀大小写绕过</strong></p>
+<ol start="2">
+<li>1 原理</li>
+</ol>
+<p>如果服务器未将后缀进行统一的格式转换，导致可以上传类似于Php、pHp的文件，同时window系统对大小写不敏感，上传后.Php、.pHp文件还是会当作php文件执行，即可实现文件上传</p>
+<ol start="2">
+<li>2 怎么测试</li>
+</ol>
+<p>知道对方服务器系统是window系统，先直接上传一个写有一句话木马的1.Php或者1.pHp文件。</p>
+<ol start="2">
+<li>3 怎么利用</li>
+</ol>
+<p>如上传成功，找到文件上传的路径，再webshell连接工具连接1.Php&#x2F;1.pHp</p>
+</li>
+<li><p><strong>点绕过</strong></p>
+<ol start="3">
+<li>1 原理</li>
+</ol>
+<p>黑名单配置规则不严谨，无法限制类似1.php.的文件，导致其可以进入到服务器</p>
+<p>与此同时，利用了Windows对文件和文件名的限制，当将点放在文件后缀名结尾的时候，就会触发操作系统的命名规范问题，所以在生成文件的时候，添加在结尾的点就会被去除。</p>
+<p>故上传的1.php.会被解析为1.php</p>
+<ol start="3">
+<li>2 怎么测试</li>
+</ol>
+<p>知道对方服务器系统是window系统，先直接上传一个写有一句话木马的1.php.文件</p>
+<ol start="3">
+<li>3 怎么利用</li>
+</ol>
+<p>如上传成功，找到文件上传的路径，再webshell连接工具连接1.php</p>
+</li>
+<li><p><strong>空白绕过</strong></p>
+<ol start="4">
+<li>1 原理</li>
+</ol>
+<p>和点绕过的原理一样，黑名单配置规则不严谨，无法限制类似1.php&lt;空格&gt;的文件，导致其可以进入到服务器</p>
+<p>与此同时，利用了Windows对文件和文件名的限制，当将&lt;空格&gt;放在文件后缀名结尾的时候，就会触发操作系统的命名规范问题，所以在生成文件的时候，添加在结尾&lt;空格&gt;就会被去除。</p>
+<p>故上传的1.php&lt;空格&gt;会被解析为1.php</p>
+</li>
+<li><p><strong>:：$DATA绕过</strong></p>
+<ol start="5">
+<li>1 原理</li>
+</ol>
+<p>​	在windows系统中，如果把文件名+ ::$DATA，则系统会把::$DATA之后的数据当成文件流处理,不会检测后缀名，且保持::$DATA之前的文件名，这样做的目的就是不检查后缀名</p>
+<ol start="5">
+<li>2 怎么利用</li>
+</ol>
+<p>​	抓包，在文件名后面加上 ::$DATA，如1.php ::$DATA，再上传，如果服务器没有过滤 ::$DATA，则可以上传成功，并且在服务器的文件会自动去掉 ::$DATA，达到正常运行1.php</p>
+</li>
+<li><p><strong>双后缀名绕过</strong></p>
+<ol start="6">
+<li>1 原理</li>
+</ol>
+<p>​	如果服务器的策略是将后缀名替换为空，可能出现的情况就是只将后后缀名过滤了一次，那么将文件的后缀双写为.pphphp，此时文件经过过滤，则会变为.php</p>
+<blockquote>
+<p>为什么不能上传.phpphp，因为如果这样的话，则两个php会在第一次过滤的时候就全部匹配且过滤掉了</p>
+<p>而.p<strong>php</strong>hp在第一次匹配过滤的时候，只会匹配到中间的那个<strong>php</strong>，而对于过滤后拼接形成的.php不进行二次过滤。</p>
+</blockquote>
+<ol start="6">
+<li>2 怎么利用</li>
+</ol>
+<p>​	抓包修改，把文件名后缀修改为.pphphp</p>
+</li>
+</ol>
+<h2 id="白名单类型："><a href="#白名单类型：" class="headerlink" title="白名单类型："></a>白名单类型：</h2><p>​	白名单：只允许上传某某后缀名的文件，则需要通过各种方式使上传的文件变为白名单的后缀，形成欺骗</p>
+<ol>
+<li><p><strong>MIME绕过</strong></p>
+<ol>
+<li>1原理</li>
+</ol>
+<p>​	首先，什么是MIME？</p>
+<blockquote>
+<p>MIME(Multipurpose Internet Mail Extensions)多用途<a target="_blank" rel="noopener" href="https://edu.csdn.net/cloud/pm_summit?utm_source=blogglc">互联网</a>邮件扩展类型。是设定某种扩展名的文件用一种应用程序来打开的方式类型，当该扩展名文件被访问的时候，浏览器会自动使用指定应用程序来打开。</p>
+</blockquote>
+<p>​	常见的MIME类型：</p>
+<blockquote>
+<p>text&#x2F;plain （纯文本）<br>text&#x2F;html （HTML文档）<br>text&#x2F;javascript （js代码）<br>application&#x2F;xhtml+xml （XHTML文档）<br>image&#x2F;gif （GIF图像）<br>image&#x2F;jpeg （JPEG图像）<br>image&#x2F;png （PNG图像）<br>video&#x2F;mpeg （MPEG动画）<br>application&#x2F;octet-stream （二进制数据）<br>application&#x2F;pdf （PDF文档）</p>
+</blockquote>
+<p>​	部分web应用是通过检测数据包中的Content-Type字段中的值（其值为MIME类型)来判断上传的文件是否合法。我们可以通过burpsuite抓包，将 content-type 字段改为常见的图片类型，如image&#x2F;gif，从而绕过校验。</p>
+<ol>
+<li>2 怎么利用</li>
+</ol>
+<p>上传1.php，抓包，修改数据包的Content-Type字段值为text&#x2F;plain 或者其它允许上传的文件MIME类型。</p>
+</li>
+<li><p><strong>%00截断</strong></p>
+<ol start="2">
+<li><p>1 原理</p>
+<p>其利用的是<strong>php版本&lt;5.3.4</strong>的一个漏洞，当其<strong>服务器采用白名单</strong>检测，存储文件名的时候，会将%00认为是终止符。如果恶意构造文件名的话，则会造成漏洞利用</p>
+<p>所以利用条件：</p>
+<blockquote>
+<p>php版本&lt;5.3.4</p>
+</blockquote>
+</li>
+<li><p>2 怎么利用</p>
+<p>如果我们上传的文件名是1.php%00.jpg</p>
+<p>当白名单检测后缀的时候，因为后面是.jpg，所以可以通过检验</p>
+<p>当存储文件的时候，由于服务器将%00当作终止符，则%00后面的.jpg不会被存储，最终存在服务器的文件名则会是1.php。</p>
+<blockquote>
+<p>需要注意的是，如果%00是在url中，则可以正常实现（浏览器自动编码）</p>
+<p>但如果在post请求包中写上%00，则需要自己手动将%00URL编码一次</p>
+</blockquote>
+</li>
+</ol>
+</li>
+</ol>
+<h2 id="其他类型："><a href="#其他类型：" class="headerlink" title="其他类型："></a>其他类型：</h2><ol>
+<li><p><strong>文件头检测</strong></p>
+<ol>
+<li><p>1 原理</p>
+<p>一般服务器解析图片格式的防护中如果没有将后缀作为防护依据，我们也就无法通过上面的各种后缀的构造方法进行欺骗了。</p>
+<p>而每个文件其实都有文件签名，也就是它的文件头，如果用winhex打开一个jpg文件的话，则会看到其前面的十六进制字段为</p>
+<blockquote>
+<p>FF D8 FF E0 00 10 4A 46 49 46</p>
+</blockquote>
+<p>常见的图片文件的文件头有：</p>
+<blockquote>
+<p>GIF：<code>47 49 46 38 39 61</code><br>png：&#96;&#96;<br>JPG：<code>FF D8 FF E0 00 10 4A 46 49 46</code></p>
+</blockquote>
+<p>如果服务器检测文件的依据是通过文件头，也就是最前面的这一串十六进制，这时候可以写一个图片木马，来达到通过检测的目的</p>
+</li>
+<li><p>2 如何利用</p>
+<p>写一个1.php文件，文件的内容是一句话木马</p>
+<p>我们利用winhex或者其他可以编辑十六进制文件的工具（如010editor、notepad++）打开木马文件，在其十六进制开头添加上图片的文件头</p>
+<p>如果白名单的图片格式是png，则在最前面添加上89 50 4E 47 0D 0A 1A 0A</p>
+<p>保存，这时候图片木马制作成功。</p>
+<p>上传1.php</p>
+</li>
+</ol>
+</li>
+<li><p><strong>二次渲染</strong></p>
+<ol start="2">
+<li><p>1 原理</p>
+<p>图片上传到服务器后，网站会对图片进行二次渲染，目的是为了使图片的格式、尺寸达到网站的要求。</p>
+<p>这样会导致我们之前在图片里面写的木马代码都会被二次渲染掉，导致木马失效</p>
+<p>但是二次渲染不可能把图片完全渲染，总是会有保留的地方</p>
+<p>如果我们把木马代码写到二次渲染后仍然保留的地方，则还是可以达到目的。</p>
+</li>
+<li><p>2 怎么利用</p>
+<p>可以用010Editor工具，对比上传前后上传后的文件，看上传后保留了哪部分的数据，然后将木马代码写入到保留的那部分数据里，以确保二次渲染后，木马代码不会被删除掉。</p>
+<p>也可以在网上找一些图片木马进行利用测试。</p>
+</li>
+</ol>
+</li>
+<li><p><strong>条件竞争</strong></p>
+<ol start="3">
+<li><p>1 原理</p>
+<p>有的网站验证上传的文件的逻辑是：</p>
+<blockquote>
+<p>先保存——&gt;验证——&gt;保存&#x2F;删除</p>
+</blockquote>
+<p>这里就存在一个逻辑漏洞，因为文件是先保存到服务器的，虽然再后面的验证过程中，木马文件会被删除，但是我可以利用这一微小的时间差：在验证的代码运行之前的瞬间，去执行木马文件，则可以达到利用漏洞的目的</p>
+</li>
+<li><p>2 怎么利用</p>
+<p>可以使用burpsuite进行利用</p>
+<p>首先我们可以先上传一个木马文件shell.php</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span> <span class="title function_ invoke__">fputs</span>(<span class="title function_ invoke__">fopen</span>(<span class="string">&#x27;1.php&#x27;</span>,<span class="string">&#x27;w&#x27;</span>),<span class="string">&#x27;&lt;?php eval($_REQUEST[1]);?&gt;&#x27;</span>);<span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>这个文件的意思就是，你一旦访问它，它就会生成一个后门文件1.php</p>
+<p>我们点击上传后在服务器发生的事情就是：</p>
+<blockquote>
+<p>保存shell.php**——&gt;**验证不通过——&gt;删除shell.php</p>
+</blockquote>
+<p>所以这个木马文件肯定一上传就会被删除，但是我们可以根据上面的逻辑，去利用它验证木马文件前的瞬间</p>
+<p>我们需要做的事情就是：不停的上传shell.php，然后不停的访问shell.php保存后的路径</p>
+<p>可以利用burpsuite的Intuude模块一直重放这两个数据包</p>
+<p>然后我们再验证1.php是否生成成功。</p>
+</li>
+</ol>
+</li>
+</ol>
+<h2 id="安全策略"><a href="#安全策略" class="headerlink" title="安全策略"></a>安全策略</h2><ol>
+<li><p>解析方案</p>
+<ol>
+<li><p>1 控制执行权限</p>
+<p>文件上传后的存储目录不给执行权限，即使上传木马文件也无法执行</p>
+</li>
+<li><p>2 解码还原</p>
+<p>把上传的文件以特定的数据流存储下来(如以base64编码)后再存储，而且解析方案固定（如固定解析为image&#x2F;png;base64）：</p>
+<p>导致不管上传的是什么文件，通通先编码为base64格式，需要解析时，只按png图片来解析，即使是木马文件也没用</p>
+</li>
+</ol>
+</li>
+<li><p>存储方案</p>
+<ol start="2">
+<li><p>1 分站存储</p>
+<p>一个网站用来提供上传功能点，而用另外一个网站存储，而用来存储的网站的目录只有读功能，或者不给执行权限。</p>
+</li>
+<li><p>2 OSS对象</p>
+<p>在云服务器中利用Access控制OSS对象存储，使得上传的文件都在OSS对象中，无法执行</p>
+</li>
+</ol>
+</li>
+</ol>
+</div>
+    </div>
+
+    <div class="post-meta">
+        <i>
+        
+            <span>2024-11-16</span>
+            
+                <span>该篇文章被 Leng-CS</span>
+            
+            
+                <span>打上标签:
+                    
+                    
+                        <a href='/tags/%E7%9F%A5%E8%AF%86%E7%82%B9%E6%B1%87%E6%80%BB/'>
+                            知识点汇总
+                        </a>
+                    
+                </span>
+             
+             
+        
+        </i>
+    </div>
+    <br>
+    
+    
+        
+            
+    
+            <div class="post-footer-pre-next">
+                
+
+                
+                    <span class="post-footer-pre-next-last-span-right">下一篇：<a href="/2024/11/08/hexo%E5%9B%BE%E7%89%87%E6%97%A0%E6%B3%95%E5%8A%A0%E8%BD%BD%E7%A9%B6%E6%9E%81%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88/">hexo图片无法加载究极解决方案</a>
+                    </span>
+                
+            </div>
+    
+        
+    
+
+    
+        
+
+     
+</div>
+
+
+
+                                      
+                    
+                    
+                    <div class="footer">
+    
+        <span> 
+            © 2004-2024 China 
+
+            
+                
+
+            
+        </span>
+       
+    
+</div>
+
+
+
+<!--这是指一条线往下的内容-->
+<div class="footer-last">
+    
+            <span>🌊🌊</span>
+            
+    
+</div>
+
+
+    
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
+
+    <!--目录-->
+    
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.7.2/jquery.min.js" type="text/javascript" ></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js" type="text/javascript" ></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.tocify/1.9.0/javascripts/jquery.tocify.min.js" type="text/javascript" ></script>
+        
+<script src="/js/toc.js"></script>
+
+    
+
+    
+<script src="/js/randomHeaderContent.js"></script>
+
+    <!--回到顶部按钮-->
+    
+        
+<script src="/js/returnToTop.js"></script>
+
+    
+
+    
+        
+<script src="/js/returnToLastPage.js"></script>
+
+    
+
+
+
+
+
+<script src="/js/lightgallery/lightgallery.umd.min.js"></script>
+
+
+
+<script src="/js/lightgallery/plugins/lg-thumbnail.umd.min.js"></script>
+
+
+
+<script src="/js/lightgallery/plugins/lg-fullscreen.umd.min.js"></script>
+
+
+<script src="/js/lightgallery/plugins/lg-autoplay.umd.min.js"></script>
+
+
+<script src="/js/lightgallery/plugins/lg-zoom.umd.min.js"></script>
+
+
+<script src="/js/lightgallery/plugins/lg-rotate.umd.min.js"></script>
+
+
+<script src="/js/lightgallery/plugins/lg-paper.umd.min.js"></script>
+
+
+
+
+<script type="text/javascript">
+     
+    if (typeof lightGallery !== "undefined") {
+        var options1 = {
+            selector: '.gallery-item',
+            plugins: [lgThumbnail, lgFullscreen, lgAutoplay, lgZoom, lgRotate, lgPager], // 启用插件
+            thumbnail: true,          // 显示缩略图
+            zoom: true,               // 启用缩放功
+            rotate: true,             // 启用旋转功能能
+            autoplay: true,        // 启用自动播放功能
+            fullScreen: true,      // 启用全屏功能
+            pager: false, //页码,
+            zoomFromOrigin: true,   // 从原始位置缩放
+            actualSize: true,       // 启用查看实际大小的功能
+            enableZoomAfter: 300,    // 延迟缩放，确保图片加载完成后可缩放
+        };
+        lightGallery(document.getElementsByClassName('.article-gallery')[0], options1); // 修复选择器
+    }
+    
+</script>
+
+
+    <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script> 
+
+                </div>
+            
+            
+                <!-- 回到顶部的按钮-->  
+                <div class="progress-wrap shadow-drop-2-bottom">
+                    <svg class="progress-circle svg-content" width="100%" height="100%" viewBox="-1 -1 102 102">
+                        <path d="M50,1 a49,49 0 0,1 0,98 a49,49 0 0,1 0,-98"/>
+                    </svg>
+                </div>
+            
+            
+                <!-- 返回的按钮-->  
+                <div class="return-to-last-progress-wrap shadow-drop-2-bottom">
+                    <svg class="progress-circle svg-content" width="100%" height="100%" viewBox="-1 -1 102 102">
+                        <path d="M50,1 a49,49 0 0,1 0,98 a49,49 0 0,1 0,-98"/>
+                    </svg>
+                </div>
+            
+    </body>
+</html>
