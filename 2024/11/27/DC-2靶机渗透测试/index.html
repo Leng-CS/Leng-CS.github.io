@@ -1,0 +1,759 @@
+<!DOCTYPE html>
+<html lang="zh">
+    
+    <head>
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" name="viewport" />
+    <meta name="description" content="DC-2靶机渗透测试" />
+    <meta name="hexo-theme-A4" content="v1.9.6" />
+    <link rel="alternate icon" type="image/webp" href="/img/favicon.png">
+    <title>Leng-CS | Personal Blog</title>
+
+    
+        
+<link rel="stylesheet" href="/css/highlight/style1.css">
+
+        
+<link rel="stylesheet" href="/css/reset.css">
+
+        
+<link rel="stylesheet" href="/css/markdown.css">
+
+        
+<link rel="stylesheet" href="/css/fonts.css">
+ 
+         <!--注意：首页既不是post也不是page-->
+        
+        
+        
+<link rel="stylesheet" href="/css/ui.css">
+ 
+        
+<link rel="stylesheet" href="/css/style.css">
+
+
+        
+            <!--返回顶部css-->
+            
+<link rel="stylesheet" href="/css/returnToTop.css">
+
+            
+<link rel="stylesheet" href="/css/unicons.css">
+
+        
+        
+            <!--目录-->
+            
+<link rel="stylesheet" href="/css/toc.css">
+
+        
+    
+
+    
+        
+<link rel="stylesheet" href="/css/returnToLastPage.css">
+
+    
+    
+   
+<link rel="stylesheet" href="/css/lightgallery-bundle.min.css">
+
+
+<meta name="generator" content="Hexo 7.3.0"></head>
+    
+    
+
+    
+    
+
+
+
+    
+
+    
+    
+
+    
+    
+    
+    <body>
+        <script src="/js/darkmode-js.min.js"></script>
+        
+        <script>
+            const options = {
+                bottom: '40px', // default: '32px'
+                right: 'unset', // default: '32px'
+                left: '42px', // default: 'unset'
+                time: '0.3s', // default: '0.3s'
+                mixColor: '#fff', // default: '#fff'
+                backgroundColor: ' #e4e4e4 ',  // default: '#fff'
+                buttonColorDark: '#100f2c',  // default: '#100f2c'
+                buttonColorLight: '#fff', // default: '#fff'
+                saveInCookies: true, // default: true,
+                label: '🌓', // default: ''
+                autoMatchOsTheme: true // default: true
+            }
+            const darkmode = new Darkmode(options);
+            darkmode.showWidget();
+        </script>
+        
+        
+            <div class="left-toc-container">
+                <nav id="toc" class="bs-docs-sidebar"></nav>
+            </div>
+        
+        <div class="paper">
+            
+            
+            
+            
+                <div class="shadow-drop-2-bottom paper-main">
+                    
+
+
+<div class="header">
+    <div class="header-container">
+        <img style="
+        width: 56px;
+        height: auto;" alt="^-^" cache-control="max-age=86400" class="header-img" src="/img/favicon.png" width="10%"></img>
+        <div class="header-content">
+            <a class="logo" href="/">Leng-CS</a> 
+            <span class="description">test2</span> 
+        </div>
+        
+    </div>
+    
+   
+    <ul class="nav">
+        
+            
+                <li><a href="/">首页</a></li>
+            
+        
+            
+                <li><a href="/list/">文章</a></li>
+            
+        
+            
+                <li><a href="/about/">关于</a></li>
+            
+        
+            
+                <li><a href="/tags/">标签</a></li>
+            
+        
+            
+                <li><a href="/categories/">分类</a></li>
+            
+        
+    </ul>
+</div> 
+        
+                    
+                    
+
+                    
+                    
+                    
+                    <!--说明是文章post页面-->
+                    
+                        <div class="post-main">
+    
+
+    
+        
+            
+                <div class="post-main-title" style="text-align: center;">
+                    DC-2靶机渗透测试
+                </div>
+            
+        
+      
+    
+
+    
+
+        
+            <div class="post-head-meta-center">
+        
+                
+                    <span>最近更新：2024-11-29</span> 
+                
+                
+                    
+                        &nbsp; | &nbsp;
+                    
+                     <span>字数总计：3.8k</span>
+                
+                
+                    
+                        &nbsp; | &nbsp;
+                    
+                    <span>阅读估时：14分钟</span>
+                
+                
+                    
+                        &nbsp; | &nbsp;
+                    
+                    <span id="busuanzi_container_page_pv">
+                        阅读量：<span id="busuanzi_value_page_pv"></span>次
+                    </span>
+                
+            </div>
+    
+
+    <div class="post-md">
+        
+            
+                <ol class="post-toc"><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#DC-2%E9%9D%B6%E6%9C%BA%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95"><span class="post-toc-text">DC-2靶机渗透测试</span></a></li></ol>
+            
+        
+        <div class=".article-gallery"><h1 id="DC-2靶机渗透测试"><a href="#DC-2靶机渗透测试" class="headerlink" title="DC-2靶机渗透测试"></a>DC-2靶机渗透测试</h1><p>  <strong>DC-2靶机，涉及到wpscan的使用，cewl的使用，rbash逃逸原理和git提权，重点个人认为在于后面的rbash逃逸和git提权，涉及到不同用户的不同权限的问题。</strong></p>
+<blockquote>
+<p>DC-2靶机下载地址：<a target="_blank" rel="noopener" href="https://download.vulnhub.com/dc/DC-2.zip">https://download.vulnhub.com/dc/DC-2.zip</a></p>
+<p>打开vm后直接导入，报错后再次导入即可</p>
+</blockquote>
+<p><strong>一、信息收集，得到flag1</strong></p>
+<ol>
+<li><p><strong>先查看靶机ip地址，因为是在局域网，所以直接</strong></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">arp-scan -l</span><br></pre></td></tr></table></figure>
+
+<a href="/2024/11/27/DC-2%E9%9D%B6%E6%9C%BA%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95/image-20241127152650586.png" class="gallery-item" style="box-shadow: none;"> <img src="/2024/11/27/DC-2%E9%9D%B6%E6%9C%BA%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95/image-20241127152650586.png" class="" title="image-20241127152650586"></a>
+
+<p>从vm设置里面查到靶机的mac地址是第三个，故靶机的ip地址就是<strong>192.168.2.131</strong>，kali的ip地址通过ifconfig查看，得到是<strong>192.168.2.128</strong></p>
+</li>
+<li><p><strong>nmap扫描</strong></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">nmap -sV -p- 192.168.2.131 </span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>-sV 探测服务版本信息</p>
+<p>-p- 探测所有端口开放信息</p>
+</blockquote>
+<a href="/2024/11/27/DC-2%E9%9D%B6%E6%9C%BA%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95/image-20241127153034311.png" class="gallery-item" style="box-shadow: none;"> <img src="/2024/11/27/DC-2%E9%9D%B6%E6%9C%BA%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95/image-20241127153034311.png" class="" title="image-20241127153034311"></a>
+
+<p>发现80端口和7744端口开放，其中80端口是http服务，7744端口是ssh远程连接服务</p>
+<ol start="2">
+<li><p>1 开放了80端口，那就浏览器打开看看是什么网页</p>
+<style>.ffdksseqhqdu{zoom:80%;}</style><a href="/2024/11/27/DC-2%E9%9D%B6%E6%9C%BA%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95/image-20241127153413152.png" title="image-20241127153413152" class="gallery-item" style="box-shadow: none;"> <img src="/2024/11/27/DC-2%E9%9D%B6%E6%9C%BA%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95/image-20241127153413152.png" class="ffdksseqhqdu" alt="image-20241127153413152"></a>
+
+<blockquote>
+<p>这里可能会出现域名解析错误的情况，导致打开不了网页，这个时候需要修改hosts文件，添加DC-2的ip地址</p>
+<p>vim &#x2F;etc&#x2F;hosts  进入hosts文件，按i进入插入模式</p>
+<style>.onhqohtmzhnv{zoom: 80%;}</style><a href="/2024/11/27/DC-2%E9%9D%B6%E6%9C%BA%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95/image-20241127154145414.png" title="image-20241127154145414" class="gallery-item" style="box-shadow: none;"> <img src="/2024/11/27/DC-2%E9%9D%B6%E6%9C%BA%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95/image-20241127154145414.png" class="onhqohtmzhnv" alt="image-20241127154145414"></a>
+
+<p>如图所示，添加靶机的ip地址和后面的域名</p>
+<p>按esc退出插入模式</p>
+<p>按shift+enter进入底部输入模式</p>
+<p>输入wq，回车，保存并退出</p>
+</blockquote>
+<p>看到网页后，有一个flag，点击看看</p>
+<a href="/2024/11/27/DC-2%E9%9D%B6%E6%9C%BA%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95/image-20241127154446976.png" class="gallery-item" style="box-shadow: none;"> <img src="/2024/11/27/DC-2%E9%9D%B6%E6%9C%BA%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95/image-20241127154446976.png" class="" title="image-20241127154446976"></a>
+
+<p>翻译过来：</p>
+<a href="/2024/11/27/DC-2%E9%9D%B6%E6%9C%BA%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95/image-20241127154538453.png" class="gallery-item" style="box-shadow: none;"> <img src="/2024/11/27/DC-2%E9%9D%B6%E6%9C%BA%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95/image-20241127154538453.png" class="" title="image-20241127154538453"></a>
+
+<p>提示我们需要用cewl工具生成密码文件，然后试着获取用户名密码</p>
+</li>
+<li><p>2 我们再看看cms信息</p>
+<p>利用插件Wappalyze，查看网页的cms信息</p>
+<a href="/2024/11/27/DC-2%E9%9D%B6%E6%9C%BA%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95/image-20241127160111132.png" class="gallery-item" style="box-shadow: none;"> <img src="/2024/11/27/DC-2%E9%9D%B6%E6%9C%BA%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95/image-20241127160111132.png" class="" title="image-20241127160111132"></a>
+
+<p>可以看到CMS为:<strong>WordPress 4.7.10</strong></p>
+<p>不同的CMS有不同的对应扫描工具，知道了是WordPress后，我们可以使用wpscan扫描网站，来获取更多关于网站的信息</p>
+</li>
+</ol>
+</li>
+<li><p><strong>WPScan扫描</strong></p>
+</li>
+</ol>
+<blockquote>
+<p>WPScan 是Kali Linux默认自带的一款漏洞扫描工具，它采用Ruby编写，能够扫描WordPress网站中的多种安全漏洞，其中包括主题漏洞、插件漏洞和WordPress本身的漏洞。还能够枚举网站用户id等等</p>
+<a href="/2024/11/27/DC-2%E9%9D%B6%E6%9C%BA%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95/image-20241127161652943.png" class="gallery-item" style="box-shadow: none;"> <img src="/2024/11/27/DC-2%E9%9D%B6%E6%9C%BA%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95/image-20241127161652943.png" class="" title="image-20241127161652943"></a>
+</blockquote>
+<p>   使用命令：</p>
+   <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">wpscan --url  http://dc-2/</span><br></pre></td></tr></table></figure>
+
+<p>   可以得到网站的基本信息：</p>
+   <a href="/2024/11/27/DC-2%E9%9D%B6%E6%9C%BA%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95/image-20241127161804436.png" class="gallery-item" style="box-shadow: none;"> <img src="/2024/11/27/DC-2%E9%9D%B6%E6%9C%BA%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95/image-20241127161804436.png" class="" title="image-20241127161804436"></a>
+
+<p>   有网站使用的服务器版本，网站使用的主题。</p>
+<p>   但是目前还没有别的可以利用信息，我们继续信息收集</p>
+<ol start="4">
+<li><p><strong>gobuster&#x2F;dirb扫描网站目录</strong></p>
+<p>居然都开放了网站网页，我们试着目录扫描一下，看能不能有新发现</p>
+<p>gobuster和dirb都是目录扫描工具，看大家喜欢用哪个了</p>
+<p>我这里使用gobuster</p>
+<p>使用命令：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">gobuster dir -u http://192.168.2.131/ -w /usr/share/wordlists/dirbuster/directory-list-2.3-medium.txt</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>dir  指定网站目录扫描</p>
+<p>-u   扫描的网站url</p>
+<p>-w  使用指定字典扫描，我这里用的是自带的字典&#x2F;usr&#x2F;share&#x2F;wordlists&#x2F;dirbuster&#x2F;directory-list-2.3-medium.txt</p>
+</blockquote>
+<a href="/2024/11/27/DC-2%E9%9D%B6%E6%9C%BA%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95/image-20241127162333423.png" class="gallery-item" style="box-shadow: none;"> <img src="/2024/11/27/DC-2%E9%9D%B6%E6%9C%BA%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95/image-20241127162333423.png" class="" title="image-20241127162333423"></a>
+
+<p>发现有管理员界面，我们点击看看：<a target="_blank" rel="noopener" href="http://192.168.2.131/wp-admin/">http://192.168.2.131/wp-admin/</a></p>
+<style>.jwstjpgrcgdy{zoom:80%;}</style><a href="/2024/11/27/DC-2%E9%9D%B6%E6%9C%BA%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95/image-20241127162451903.png" title="image-20241127162451903" class="gallery-item" style="box-shadow: none;"> <img src="/2024/11/27/DC-2%E9%9D%B6%E6%9C%BA%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95/image-20241127162451903.png" class="jwstjpgrcgdy" alt="image-20241127162451903"></a>
+
+<p>发现确实是管理员后台登入界面</p>
+<p>还有其余两个界面，一个打开是空白的，一个打开是一些网站文件界面：</p>
+<style>.nwmfhbrxzdql{zoom:80%;}</style><a href="/2024/11/27/DC-2%E9%9D%B6%E6%9C%BA%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95/image-20241127162824752.png" title="image-20241127162824752" class="gallery-item" style="box-shadow: none;"> <img src="/2024/11/27/DC-2%E9%9D%B6%E6%9C%BA%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95/image-20241127162824752.png" class="nwmfhbrxzdql" alt="image-20241127162824752"></a></li>
+</ol>
+<p><strong>二、信息利用，得到flag2</strong></p>
+<p>  到现在我们已经知道了网站使用的是WordPress的CMS框架，有一个管理员后台登入界面，一个目录界面</p>
+<p>网站还开放了ssh连接。</p>
+<p>  根据flag提示，我们接下来的思路就是利用cewl工具，配合WPSacn，得到登入的用户名密码，进行ssh连接，或者试试暴力破解管理员后台。</p>
+<p>那就开干</p>
+<ol>
+<li><p>利用是cewl</p>
+<blockquote>
+<p>cewl是一款用于创建自定义字典文件的工具，可以从指定的网站或文本文件中提取出关键字，并组合成自定义字典文件。</p>
+<p>在终端输入“cewl -h”之后，工具会输出所有可接受的选项参数，以及对应的选项描述.</p>
+<style>.lqiqmlftjhlr{zoom:80%;}</style><a href="/2024/11/27/DC-2%E9%9D%B6%E6%9C%BA%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95/image-20241127155148313.png" title="image-20241127155148313" class="gallery-item" style="box-shadow: none;"> <img src="/2024/11/27/DC-2%E9%9D%B6%E6%9C%BA%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95/image-20241127155148313.png" class="lqiqmlftjhlr" alt="image-20241127155148313"></a>
+</blockquote>
+<p>简而言之，可以利用cewl，生成对应网站的可能的登入密码字典</p>
+<p>按照上面flag的提示，我们需要利用cewl生成密码字典</p>
+<p>使用命令：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cewl http://dc-2/ -w passwd.txt </span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>cewl 后输入要生成字典对应的网站 </p>
+<p>-w  把生成的文件导入到指定文件，我这里导入到passwd.txt</p>
+</blockquote>
+<style>.lisfctcytmij{zoom:80%;}</style><a href="/2024/11/27/DC-2%E9%9D%B6%E6%9C%BA%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95/image-20241127155554212.png" title="image-20241127155554212" class="gallery-item" style="box-shadow: none;"> <img src="/2024/11/27/DC-2%E9%9D%B6%E6%9C%BA%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95/image-20241127155554212.png" class="lisfctcytmij" alt="image-20241127155554212"></a>
+
+<p>可以看到生成了密码字典文件</p>
+<p>有了密码字典文件，没有用户名文件我咋爆破呢？</p>
+<p>这里就需要配合使用WPScan，这个工具还可以枚举得到一些用户名的信息，也就是特定的用户账号</p>
+</li>
+<li><p>利用WPScan扫描用户账号信息</p>
+<p>使用命令：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">wpscan --url http://dc-2/ -e u</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>-e  u  枚举网站用户账号信息</p>
+</blockquote>
+<a href="/2024/11/27/DC-2%E9%9D%B6%E6%9C%BA%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95/image-20241127164148919.png" class="gallery-item" style="box-shadow: none;"> <img src="/2024/11/27/DC-2%E9%9D%B6%E6%9C%BA%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95/image-20241127164148919.png" class="" title="image-20241127164148919"></a>
+
+<p>这里可以看到枚举出了三个用户id信息：admin，jerry，tom</p>
+</li>
+<li><p>利用WPScan暴力破解用户名密码</p>
+<p>我们现在有了网站的密码字典，现在又通过WPScan扫描出来三个用户id，现在需要做的就是去使用工具，利用我们cewl生成的passwd.txt字典来暴力破解这三个id密码了</p>
+<p>WPScan是带有暴力破解功能的，只需要给出需要爆破的用户名字典和密码字典</p>
+<p>我们先把三个用户名存到一个字典里去，我这里利用vim编辑器保存到users.txt文件</p>
+<style>.fxxzthxucvne{zoom: 67%;}</style><a href="/2024/11/27/DC-2%E9%9D%B6%E6%9C%BA%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95/image-20241127164839477.png" title="image-20241127164839477" class="gallery-item" style="box-shadow: none;"> <img src="/2024/11/27/DC-2%E9%9D%B6%E6%9C%BA%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95/image-20241127164839477.png" class="fxxzthxucvne" alt="image-20241127164839477"></a>
+
+<p>再使用命令：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">wpscan --url http://dc-2/  -U users.txt -P passwd.txt</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>–url  指定要爆破的网站</p>
+<p>-U  指定爆破的用户名文件</p>
+<p>-P  指定爆破的密码文件</p>
+</blockquote>
+<a href="/2024/11/27/DC-2%E9%9D%B6%E6%9C%BA%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95/image-20241127165243631.png" class="gallery-item" style="box-shadow: none;"> <img src="/2024/11/27/DC-2%E9%9D%B6%E6%9C%BA%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95/image-20241127165243631.png" class="" title="image-20241127165243631"></a>
+
+<p>   这里我们成功爆破出来两个用户的账号，分别是jerry和tom，admin的没有爆破出来，</p>
+<p>我们尝试利用这两个账号登入</p>
+<p>jerry和tom都登入成功，然后一通点点看看，在jerry用户的pages界面发现有flag2</p>
+<style>.lrbeezdzrrej{zoom:80%;}</style><a href="/2024/11/27/DC-2%E9%9D%B6%E6%9C%BA%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95/image-20241127165710519.png" title="image-20241127165710519" class="gallery-item" style="box-shadow: none;"> <img src="/2024/11/27/DC-2%E9%9D%B6%E6%9C%BA%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95/image-20241127165710519.png" class="lrbeezdzrrej" alt="image-20241127165710519"></a>
+
+<a href="/2024/11/27/DC-2%E9%9D%B6%E6%9C%BA%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95/image-20241127165807110.png" class="gallery-item" style="box-shadow: none;"> <img src="/2024/11/27/DC-2%E9%9D%B6%E6%9C%BA%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95/image-20241127165807110.png" class="" title="image-20241127165807110"></a>
+
+<p>告诉我们的信息很简单，我们无法通过像DC-1那样利用WordPress的历史漏洞做文章，提示我们用用别的方法。</p>
+</li>
+</ol>
+<p><strong>三、SSH远程登入</strong></p>
+<p>  通过前面的端口扫描，我们知道网站还在7744端口开放了ssh服务，这个时候我们已经获得了两个用户的账号密码，我们试着ssh登入一下</p>
+<p>  使用命令：  </p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ssh tom@192.168.2.131 -p 7744</span><br></pre></td></tr></table></figure>
+
+<a href="/2024/11/27/DC-2%E9%9D%B6%E6%9C%BA%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95/image-20241127170315231.png" class="gallery-item" style="box-shadow: none;"> <img src="/2024/11/27/DC-2%E9%9D%B6%E6%9C%BA%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95/image-20241127170315231.png" class="" title="image-20241127170315231"></a>
+
+<p>  再输入密码<strong>parturient</strong>，成功ssh登入</p>
+<p>  我们也试着登入jerry，发现不能登入。那我们现在的重点就在tom账号上了。</p>
+<p><strong>四、在rbash下查看flag3</strong></p>
+<p>​	查看目录</p>
+<style>.fhbahtoqsbap{zoom:80%;}</style><a href="/2024/11/27/DC-2%E9%9D%B6%E6%9C%BA%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95/image-20241127170659969.png" title="image-20241127170659969" class="gallery-item" style="box-shadow: none;"> <img src="/2024/11/27/DC-2%E9%9D%B6%E6%9C%BA%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95/image-20241127170659969.png" class="fhbahtoqsbap" alt="image-20241127170659969"></a>
+
+<p>​	看到有flag3.txt，cat查看，发现报错：-rbash: cat: command not found。这个时候我们就知道我们的shell是一个rbash了</p>
+<ol>
+<li><p>1 什么是rbash？</p>
+<blockquote>
+<p>rbash&#96;即受限的 Bash（Restricted Bash）。它是 Bash（Bourne - Again Shell）的一个受限模式，主要用于限制用户在 shell 环境中的操作权限，增强系统的安全性。</p>
+<p>与普通 Bash 的区别示例</p>
+<ul>
+<li>假设在普通 Bash 环境下，用户可以执行以下操作：<ul>
+<li>切换到<code>/etc</code>目录：<code>cd /etc</code>，然后查看目录下的文件列表<code>ls</code>。</li>
+<li>修改<code>PATH</code>环境变量，如<code>PATH=&quot;$PATH:/new/directory&quot;</code>，将一个新的目录添加到<code>PATH</code>中，这样就可以在该目录下执行自定义的程序。</li>
+</ul>
+</li>
+<li>而在<code>rbash</code>环境下，执行<code>cd /etc</code>会显示错误，因为这个操作被限制。同样，修改<code>PATH</code>环境变量的操作也可能会被禁止，具体取决于<code>rbash</code>的配置。</li>
+</ul>
+</blockquote>
+<p>居然是受限模式，我们就需要知道还剩下哪些命令能用，我们需要去环境变量里面看</p>
+<p>先返回环境变量：</p>
+<a href="/2024/11/27/DC-2%E9%9D%B6%E6%9C%BA%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95/image-20241127171451988.png" class="gallery-item" style="box-shadow: none;"> <img src="/2024/11/27/DC-2%E9%9D%B6%E6%9C%BA%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95/image-20241127171451988.png" class="" title="image-20241127171451988"></a>
+
+<p>再去环境变量里面看看：</p>
+<a href="/2024/11/27/DC-2%E9%9D%B6%E6%9C%BA%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95/image-20241127171546878.png" class="gallery-item" style="box-shadow: none;"> <img src="/2024/11/27/DC-2%E9%9D%B6%E6%9C%BA%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95/image-20241127171546878.png" class="" title="image-20241127171546878"></a>
+
+<p>发现确实连cd命令都用不了，我们用ls直接查看目录：</p>
+<a href="/2024/11/27/DC-2%E9%9D%B6%E6%9C%BA%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95/image-20241127171753473.png" class="gallery-item" style="box-shadow: none;"> <img src="/2024/11/27/DC-2%E9%9D%B6%E6%9C%BA%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95/image-20241127171753473.png" class="" title="image-20241127171753473"></a>
+
+<p>发现可以还可以使用less、ls、scp、vi</p>
+<p>居然能用vi，那么我们用vi编辑器打开flag3.txt应该是可行的</p>
+<p>使用vi查看flag3.txt</p>
+<a href="/2024/11/27/DC-2%E9%9D%B6%E6%9C%BA%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95/image-20241127171939105.png" class="gallery-item" style="box-shadow: none;"> <img src="/2024/11/27/DC-2%E9%9D%B6%E6%9C%BA%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95/image-20241127171939105.png" class="" title="image-20241127171939105"></a>
+
+<blockquote>
+<p>可怜的老tom总是跑在jerry后面，可能他需要<strong>su</strong></p>
+</blockquote>
+<p>跑在jerry后面可能就是暗指权限没有tom高，其实这里就是提醒我们su切换到jerry用户。</p>
+<p>但我现在tom都还只是一个rbash，所以，还是需要<strong>rbash逃逸</strong>。</p>
+</li>
+</ol>
+<p><strong>五、rbash逃逸</strong></p>
+<p>​	这里网上一般有两种方法</p>
+<ol>
+<li><p>方法一：利用vi编辑器，设置一个全新的shell</p>
+<p>我们当前的shell是rbash，但是我们能用vi编辑器，那就好办，利用vi编辑的命令模式，我们重新打开一个shell，不就可以了吗？</p>
+<p>先输入vi，再回车</p>
+<p>在命令模式下：</p>
+<p>：set  shell&#x3D;&#x2F;bin&#x2F;bash</p>
+<p>:   shell </p>
+<blockquote>
+<p>set  表示设置一个选项的值</p>
+<p>shell&#x3D;&#x2F;bin&#x2F;bash 修改 shell 的值为 &#x2F;bin&#x2F;bash。</p>
+<p>所以，set  shell&#x3D;&#x2F;bin&#x2F;bash的意思就是设置一个值为 &#x2F;bin&#x2F;bash的shell</p>
+<p>:shell 命令表示执行这个 shell</p>
+<p>因此，如果用户使用 :shell 命令，就可以运行 bash，从而绕过 rbash的限制。</p>
+</blockquote>
+<a href="/2024/11/27/DC-2%E9%9D%B6%E6%9C%BA%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95/image-20241127173720280.png" class="gallery-item" style="box-shadow: none;"> <img src="/2024/11/27/DC-2%E9%9D%B6%E6%9C%BA%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95/image-20241127173720280.png" class="" title="image-20241127173720280"></a>
+
+<a href="/2024/11/27/DC-2%E9%9D%B6%E6%9C%BA%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95/image-20241127173759325.png" class="gallery-item" style="box-shadow: none;"> <img src="/2024/11/27/DC-2%E9%9D%B6%E6%9C%BA%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95/image-20241127173759325.png" class="" title="image-20241127173759325"></a>
+
+<p>再回车，这个时候我们cat一下flag3.txt</p>
+<a href="/2024/11/27/DC-2%E9%9D%B6%E6%9C%BA%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95/image-20241127173847128.png" class="gallery-item" style="box-shadow: none;"> <img src="/2024/11/27/DC-2%E9%9D%B6%E6%9C%BA%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95/image-20241127173847128.png" class="" title="image-20241127173847128"></a>
+
+<p>不是报错rbash，说明我们已经成功开启了一个新的shell了</p>
+<p><strong>但是，要正常使用这个shell，我们还是需要手动设置环境变量的</strong>，不然新的shell不知道从哪去找命令文件。</p>
+<p>设置环境变量：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">export PATH=$PATH:/bin/</span><br><span class="line">export PATH=$PATH:/usr/bin/</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>export 用于将一个变量设置为环境变量，并使之生效</p>
+<p>PATH&#x3D;  设置环境变量</p>
+<p>$PATH  获取当前的环境变量的值</p>
+<p>:&#x2F;bin&#x2F;   将&#x2F;bin&#x2F; 拼接在$PATH后面</p>
+<p>这样的结果就是：是将&#x2F;bin&#x2F;目录和&#x2F;usr&#x2F;bin&#x2F;目录添加到系统查找可执行文件的路径列表中也就是设置了新的环境变量。这样，系统在寻找可执行文件时，就会在原来的路径基础上，也会在&#x2F;bin&#x2F;和&#x2F;usr&#x2F;bin&#x2F;目录中进行查找。</p>
+</blockquote>
+<p>我们echo $PATH，查看环境变量是否配置成功。</p>
+<a href="/2024/11/27/DC-2%E9%9D%B6%E6%9C%BA%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95/image-20241127175023181.png" class="gallery-item" style="box-shadow: none;"> <img src="/2024/11/27/DC-2%E9%9D%B6%E6%9C%BA%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95/image-20241127175023181.png" class="" title="image-20241127175023181"></a>
+
+<p>配置成功。</p>
+<p>这样，我们就获得到一个tom用户的shell，不再是受限模式的shell了。成功的实现了rbash逃逸。</p>
+</li>
+<li><p>方法二：</p>
+<p>这种方法的来源很莫名其妙，看了许多教程也大多都是重复的，没有讲解原理，这里我附上一点我的理解。</p>
+<p>方法如下：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">BASH_CMDS[a]=/bin/bash;a  #把/bin/bash给a变量</span><br><span class="line">export PATH=$PATH:/bin/ #将/bin 作为PATH环境变量导出</span><br><span class="line">export PATH=$PATH:/usr/bin #将/usr/bin作为PATH环境变量</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>原理：</p>
+<p>关于BASH_CMDS[a]：</p>
+<p>在 Bash（以及 rbash 基于其实现的相关机制）中，<code>BASH_CMDS</code> 是一个关联数组（在支持数组特性的 Bash 版本中），用于存储命令名称与对应的执行路径或处理函数等相关信息。</p>
+<ul>
+<li><p><code>BASH_CMDS[a]=/bin/sh</code>  这条语句的目的是将数组元素 <code>BASH_CMDS[a]</code> 的值设置为 <code>/bin/sh</code>。也就是说，它试图在 <code>BASH_CMDS</code> 这个关联数组中，将索引为 <code>a</code> 的元素关联到 <code>/bin/sh</code></p>
+</li>
+<li><p><code>;a</code>  在 Shell 脚本或命令行中，分号（<code>;</code>）是用于分隔多个命令的字符。所以这里在完成对 <code>BASH_CMDS</code> 数组元素的赋值操作后</p>
+</li>
+</ul>
+<p> 也就是说，通过赋值&#x2F;bin&#x2F;bash给以a为索引数组BASH_CMDS[a]，然后运行a，结果就是等同于运行&#x2F;bin&#x2F;bash，得到了一个新的shell</p>
+<ul>
+<li>后面两个export语句同第一种方法，也是为新的shell设置新的环境变量</li>
+</ul>
+</blockquote>
+<p>这种方法其实比较鸡肋，主要是你都可以给一个特殊的数组赋值了，那这个rbash限制了些啥，通常情况下是会被限制的。</p>
+<p>但是DC-2这个靶机刚好可以使用 这个方法。</p>
+<p>其它逃逸rbash的方法可以参考这个文章，写得很详细：<a target="_blank" rel="noopener" href="https://xz.aliyun.com/t/7642?time__1311=n4+xnD0DyDuDgDfxGqP05qYTpn0fwxTA+2ID">rbash逃逸大全 - 先知社区</a></p>
+</li>
+<li><p>查看flag4.txt</p>
+<p>到现在我们拥有了一个正常的shell，我们cd  ..&#x2F;查看一下上级目录</p>
+<a href="/2024/11/27/DC-2%E9%9D%B6%E6%9C%BA%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95/image-20241127220422784.png" class="gallery-item" style="box-shadow: none;"> <img src="/2024/11/27/DC-2%E9%9D%B6%E6%9C%BA%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95/image-20241127220422784.png" class="" title="image-20241127220422784"></a>
+
+<p>有jerry目录，我们看看</p>
+<a href="/2024/11/27/DC-2%E9%9D%B6%E6%9C%BA%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95/image-20241127220500213.png" class="gallery-item" style="box-shadow: none;"> <img src="/2024/11/27/DC-2%E9%9D%B6%E6%9C%BA%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95/image-20241127220500213.png" class="" title="image-20241127220500213"></a>
+
+<p>得到flag4：</p>
+<a href="/2024/11/27/DC-2%E9%9D%B6%E6%9C%BA%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95/image-20241129162135710.png" class="gallery-item" style="box-shadow: none;"> <img src="/2024/11/27/DC-2%E9%9D%B6%E6%9C%BA%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95/image-20241129162135710.png" class="" title="image-20241129162135710"></a>
+
+<p>其实就是告诉我们<strong>要提权了</strong>。而且有一个提示，就是要用到<strong>git</strong></p>
+<p>而且结合flag3的提示，估计是需要先切换到jerry用户，然后再使用<strong>git提权</strong></p>
+</li>
+</ol>
+<p><strong>六、git提权</strong></p>
+<ol>
+<li><p>我们先试试在tom用户下的shell能不能实现提权，毕竟好不容易得到的shell。</p>
+<p>老套路，我们先试试有没有SUID提权：</p>
+<p>使用命令：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">find / -perm -u=s -type f 2&gt;/dev/null</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>find &#x2F; -perm -u&#x3D;s -type f 2&gt;&#x2F;dev&#x2F;null<br>&#x2F;  表示从文件系统的顶部（根）开始并找到每个目录<br>-perm 表示搜索随后的权限<br>-u &#x3D; s  表示查找root用户拥有的文件<br>-type  表示我们正在寻找的文件类型<br>f   表示常规文件，而不是目录或特殊文件<br>2  表示该进程的第二个文件描述符，即stderr（标准错误）</p>
+<p>‘&gt;’  表示重定向</p>
+<p>&#x2F; dev &#x2F; null  是一个特殊的文件系统对象，它将丢弃写入其中的所有内容。</p>
+</blockquote>
+<a href="/2024/11/27/DC-2%E9%9D%B6%E6%9C%BA%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95/image-20241129163430166.png" class="gallery-item" style="box-shadow: none;"> <img src="/2024/11/27/DC-2%E9%9D%B6%E6%9C%BA%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95/image-20241129163430166.png" class="" title="image-20241129163430166"></a>
+
+<p>发现没有常见的SUID提权命令</p>
+<blockquote>
+<p>常见的SUID提权命令及方法：<a target="_blank" rel="noopener" href="https://blog.csdn.net/CoreNote/article/details/122093180">红队笔记之Suid提权浅析与利用方法总结_使用suid提权-CSDN博客</a></p>
+</blockquote>
+<p>我们再看看能不能用sudo：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo -l</span><br></pre></td></tr></table></figure>
+
+<a href="/2024/11/27/DC-2%E9%9D%B6%E6%9C%BA%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95/image-20241129163742602.png" class="gallery-item" style="box-shadow: none;"> <img src="/2024/11/27/DC-2%E9%9D%B6%E6%9C%BA%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95/image-20241129163742602.png" class="" title="image-20241129163742602"></a>
+
+<p>好吧，sudo也不能用，果然是可怜的tom</p>
+<p>那我们老老实实的登入jerry吧。</p>
+</li>
+<li><p>登入jerry</p>
+<p>上面可以看到其实tom能用su切换用户，我们之前ssh登入不上jerry，这次我们试试利用su切换到jerry。</p>
+<p>有人纠结于是用su jerry 还是 su - jerry</p>
+<blockquote>
+<p>su</p>
+<ul>
+<li>通常情况下，使用<code>su</code>切换用户后，工作目录不会改变。仍然会保持在执行<code>su</code>命令之前的目录位置。例如，当前用户在<code>/home/user1/documents</code>目录下，执行<code>su user2</code>后，工作目录依然是<code>/home/user1/documents</code>。</li>
+</ul>
+<p>su -</p>
+<ul>
+<li>当使用<code>su -</code>切换用户时，工作目录会切换到新用户的主目录（由<code>HOME</code>环境变量指定）。例如，新用户<code>user2</code>的主目录是<code>/home/user2</code>，执行<code>su - user2</code>后，工作目录会变为<code>/home/user2</code>。</li>
+</ul>
+</blockquote>
+<p>我们可以都试试看看区别：</p>
+<a href="/2024/11/27/DC-2%E9%9D%B6%E6%9C%BA%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95/image-20241129164751191.png" class="gallery-item" style="box-shadow: none;"> <img src="/2024/11/27/DC-2%E9%9D%B6%E6%9C%BA%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95/image-20241129164751191.png" class="" title="image-20241129164751191"></a>
+
+<p>简而言之，就是工作目录改不改变的区别，权限上没有区别。</p>
+<p>所以，两种命令都是可以用的，看你的喜欢。我这里使用su - jerry</p>
+<p>登入到jerry后，我们老样子，先看看有没有SUID提权：</p>
+<p>使用命令：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">find / -perm -u=s -type f 2&gt;/dev/null</span><br></pre></td></tr></table></figure>
+
+
+
+<a href="/2024/11/27/DC-2%E9%9D%B6%E6%9C%BA%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95/image-20241129165118056.png" class="gallery-item" style="box-shadow: none;"> <img src="/2024/11/27/DC-2%E9%9D%B6%E6%9C%BA%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95/image-20241129165118056.png" class="" title="image-20241129165118056"></a>
+
+<p>发现也是没有可以利用的指令。</p>
+<p>那我们试试看sudo能不能用：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo -l</span><br></pre></td></tr></table></figure>
+
+<a href="/2024/11/27/DC-2%E9%9D%B6%E6%9C%BA%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95/image-20241129165231355.png" class="gallery-item" style="box-shadow: none;"> <img src="/2024/11/27/DC-2%E9%9D%B6%E6%9C%BA%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95/image-20241129165231355.png" class="" title="image-20241129165231355"></a>
+
+<p>这里可以看到，jerry通过sudo用git命令时候，不需要用到root用户的密码。</p>
+<p>结合flag4.txt的提示，我们就需要用git命令来进行提权了。</p>
+</li>
+<li><p>git提权</p>
+<p>sudo git提权在网上搜到有两种方法。本质都是一样的，只是命令不同而已</p>
+<p>使用命令：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">sudo git help config</span><br><span class="line">	!/bin/bash或者！&#x27;sh&#x27;完成提权</span><br><span class="line"> </span><br><span class="line">sudo git  -p help</span><br><span class="line">	!/bin/bash</span><br></pre></td></tr></table></figure>
+
+<p>然后再在底下输入：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">!/bin/bash</span><br></pre></td></tr></table></figure>
+
+<a href="/2024/11/27/DC-2%E9%9D%B6%E6%9C%BA%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95/image-20241129170216055.png" class="gallery-item" style="box-shadow: none;"> <img src="/2024/11/27/DC-2%E9%9D%B6%E6%9C%BA%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95/image-20241129170216055.png" class="" title="image-20241129170216055"></a>
+
+<p>即可得到root权限的shell</p>
+<a href="/2024/11/27/DC-2%E9%9D%B6%E6%9C%BA%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95/image-20241129170316991.png" class="gallery-item" style="box-shadow: none;"> <img src="/2024/11/27/DC-2%E9%9D%B6%E6%9C%BA%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95/image-20241129170316991.png" class="" title="image-20241129170316991"></a></li>
+</ol>
+<p><strong>七、thefinalflag</strong></p>
+<ol>
+<li><p>有了root权限，我们直接使用find命令找关键字flag</p>
+<p>使用命令：	</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">find / -name &quot;*flag*.txt&quot;</span><br></pre></td></tr></table></figure>
+
+<p>​	<a href="/2024/11/27/DC-2%E9%9D%B6%E6%9C%BA%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95/image-20241129170723033.png" class="gallery-item" style="box-shadow: none;"> <img src="/2024/11/27/DC-2%E9%9D%B6%E6%9C%BA%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95/image-20241129170723033.png" class="" title="image-20241129170723033"></a></p>
+<p>直接查看吧:</p>
+<a href="/2024/11/27/DC-2%E9%9D%B6%E6%9C%BA%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95/image-20241129171041428.png" class="gallery-item" style="box-shadow: none;"> <img src="/2024/11/27/DC-2%E9%9D%B6%E6%9C%BA%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95/image-20241129171041428.png" class="" title="image-20241129171041428"></a></li>
+</ol>
+</div>
+    </div>
+
+    <div class="post-meta">
+        <i>
+        
+            <span>2024-11-27</span>
+            
+                <span>该篇文章被 Leng-CS</span>
+            
+            
+                <span>打上标签:
+                    
+                    
+                        <a href='/tags/%E9%9D%B6%E6%9C%BA%E8%AE%B2%E8%A7%A3/'>
+                            靶机讲解
+                        </a>
+                    
+                </span>
+             
+             
+        
+        </i>
+    </div>
+    <br>
+    
+    
+        
+            
+    
+            <div class="post-footer-pre-next">
+                
+
+                
+                    <span class="post-footer-pre-next-last-span-right">下一篇：<a href="/2024/11/16/%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0/">文件上传原生态漏洞详解（无图精炼版)</a>
+                    </span>
+                
+            </div>
+    
+        
+    
+
+    
+        
+
+     
+</div>
+
+
+
+                                      
+                    
+                    
+                    <div class="footer">
+    
+        <span> 
+            © 2004-2024 China 
+
+            
+                
+
+            
+        </span>
+       
+    
+</div>
+
+
+
+<!--这是指一条线往下的内容-->
+<div class="footer-last">
+    
+            <span>🌊🌊</span>
+            
+    
+</div>
+
+
+    
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
+
+    <!--目录-->
+    
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.7.2/jquery.min.js" type="text/javascript" ></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js" type="text/javascript" ></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.tocify/1.9.0/javascripts/jquery.tocify.min.js" type="text/javascript" ></script>
+        
+<script src="/js/toc.js"></script>
+
+    
+
+    
+<script src="/js/randomHeaderContent.js"></script>
+
+    <!--回到顶部按钮-->
+    
+        
+<script src="/js/returnToTop.js"></script>
+
+    
+
+    
+        
+<script src="/js/returnToLastPage.js"></script>
+
+    
+
+
+
+
+
+<script src="/js/lightgallery/lightgallery.umd.min.js"></script>
+
+
+
+<script src="/js/lightgallery/plugins/lg-thumbnail.umd.min.js"></script>
+
+
+
+<script src="/js/lightgallery/plugins/lg-fullscreen.umd.min.js"></script>
+
+
+<script src="/js/lightgallery/plugins/lg-autoplay.umd.min.js"></script>
+
+
+<script src="/js/lightgallery/plugins/lg-zoom.umd.min.js"></script>
+
+
+<script src="/js/lightgallery/plugins/lg-rotate.umd.min.js"></script>
+
+
+<script src="/js/lightgallery/plugins/lg-paper.umd.min.js"></script>
+
+
+
+
+<script type="text/javascript">
+     
+    if (typeof lightGallery !== "undefined") {
+        var options1 = {
+            selector: '.gallery-item',
+            plugins: [lgThumbnail, lgFullscreen, lgAutoplay, lgZoom, lgRotate, lgPager], // 启用插件
+            thumbnail: true,          // 显示缩略图
+            zoom: true,               // 启用缩放功
+            rotate: true,             // 启用旋转功能能
+            autoplay: true,        // 启用自动播放功能
+            fullScreen: true,      // 启用全屏功能
+            pager: false, //页码,
+            zoomFromOrigin: true,   // 从原始位置缩放
+            actualSize: true,       // 启用查看实际大小的功能
+            enableZoomAfter: 300,    // 延迟缩放，确保图片加载完成后可缩放
+        };
+        lightGallery(document.getElementsByClassName('.article-gallery')[0], options1); // 修复选择器
+    }
+    
+</script>
+
+
+    <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script> 
+
+                </div>
+            
+            
+                <!-- 回到顶部的按钮-->  
+                <div class="progress-wrap shadow-drop-2-bottom">
+                    <svg class="progress-circle svg-content" width="100%" height="100%" viewBox="-1 -1 102 102">
+                        <path d="M50,1 a49,49 0 0,1 0,98 a49,49 0 0,1 0,-98"/>
+                    </svg>
+                </div>
+            
+            
+                <!-- 返回的按钮-->  
+                <div class="return-to-last-progress-wrap shadow-drop-2-bottom">
+                    <svg class="progress-circle svg-content" width="100%" height="100%" viewBox="-1 -1 102 102">
+                        <path d="M50,1 a49,49 0 0,1 0,98 a49,49 0 0,1 0,-98"/>
+                    </svg>
+                </div>
+            
+    </body>
+</html>
